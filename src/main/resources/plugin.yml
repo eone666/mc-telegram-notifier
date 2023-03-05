@@ -1,0 +1,4 @@
+name: TelegramJoinNotifications
+version: '${version}'
+main: io.github.eone666.telegramjoinnotifications.TelegramJoinNotifications
+api-version: 1.19
