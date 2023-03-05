@@ -5,7 +5,6 @@ import io.github.eone666.telegramjoinnotifications.events.PlayerQuit;
 import io.github.eone666.telegramjoinnotifications.utils.Telegram;
 import org.bukkit.plugin.java.JavaPlugin;
 
-@SuppressWarnings("UNUSED")
 public final class TelegramJoinNotifications extends JavaPlugin {
 
     @Override
@@ -21,7 +20,7 @@ public final class TelegramJoinNotifications extends JavaPlugin {
             String chatId = getConfig().getString("chatId");
             String prefix = getConfig().getString("prefix");
 
-            Telegram tg = new Telegram(token, chatId, prefix);
+            Telegram tg = new Telegram(this, token, chatId, prefix);
 
             getServer().getPluginManager().registerEvents(new PlayerJoin(tg), this);
             getServer().getPluginManager().registerEvents(new PlayerQuit(tg), this);

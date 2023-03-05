@@ -1,4 +1,4 @@
 token: 'TOKEN_HERE'
 chatId: 'CHAT_ID_HERE'
-prefix: '👷‍♂️'
+#prefix: 'Minecraft'
 enabled: false
