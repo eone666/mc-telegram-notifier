@@ -1,6 +1,6 @@
-package io.github.eone666.telegramjoinnotifications.utils;
+package io.github.eone666.telegramnotifier.utils;
 
-import io.github.eone666.telegramjoinnotifications.TelegramJoinNotifications;
+import io.github.eone666.telegramnotifier.TelegramNotifier;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -9,12 +9,12 @@ import java.net.http.HttpResponse;
 
 public class Telegram {
 
-    private TelegramJoinNotifications _plugin = null;
+    private TelegramNotifier _plugin = null;
     private String _token = null;
     private String _chatId = null;
     private String _prefix = null;
 
-    public Telegram (TelegramJoinNotifications plugin, String token, String chatId, String prefix) {
+    public Telegram (TelegramNotifier plugin, String token, String chatId, String prefix) {
         _plugin = plugin;
         _token = token;
         _chatId = chatId;

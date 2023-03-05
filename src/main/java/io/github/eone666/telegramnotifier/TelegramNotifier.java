@@ -1,11 +1,11 @@
-package io.github.eone666.telegramjoinnotifications;
+package io.github.eone666.telegramnotifier;
 
-import io.github.eone666.telegramjoinnotifications.events.PlayerJoin;
-import io.github.eone666.telegramjoinnotifications.events.PlayerQuit;
-import io.github.eone666.telegramjoinnotifications.utils.Telegram;
+import io.github.eone666.telegramnotifier.events.PlayerJoin;
+import io.github.eone666.telegramnotifier.events.PlayerQuit;
+import io.github.eone666.telegramnotifier.utils.Telegram;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class TelegramJoinNotifications extends JavaPlugin {
+public final class TelegramNotifier extends JavaPlugin {
 
     @Override
     public void onEnable() {

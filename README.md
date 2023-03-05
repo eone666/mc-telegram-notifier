@@ -1,16 +1,16 @@
-# Telegram Join Notifications
+# Telegram Notifier
 
 This plugin provides a way to receive notifications on a Telegram chat when a player joins or quits your Minecraft server.
 
 ## Installation
 
-1. Download the latest version from the [releases page](https://github.com/eone666/paper-telegram-notification/releases).
+1. Download the latest version from the [releases page](https://github.com/eone666/telegram-notifier/releases).
 2. Place the downloaded JAR file into your server's `plugins` folder.
 3. Start the server.
 
 ## Configuration
 
-1. After starting the server with the plugin installed, a `config.yml` file will be generated in the `plugins/TelegramJoinNotifications` folder.
+1. After starting the server with the plugin installed, a `config.yml` file will be generated in the `plugins/TelegramNotifier` folder.
 2. Open the `config.yml` file and set the `enabled` option to `true`.
 3. Obtain a Telegram Bot API token and chat ID. Follow [these instructions](https://core.telegram.org/bots#6-botfather) to create a bot and obtain the token, and [these instructions](https://stackoverflow.com/a/32572159) to obtain the chat ID.
 4. Set the `token` and `chatId` options in the `config.yml` file to the values obtained in step 3.
@@ -20,7 +20,7 @@ This plugin provides a way to receive notifications on a Telegram chat when a pl
 
 After configuring the plugin, you will receive a notification in the configured Telegram chat when a player joins or quits the server.
 
-![screenshot](https://github.com/eone666/paper-telegram-notification/raw/main/images/screenshot.png)
+![screenshot](https://github.com/eone666/telegram-notifier/raw/main/images/screenshot.png)
 
 ## Roadmap
 
@@ -37,8 +37,8 @@ This plugin is currently being used on the following Minecraft server:
 
 ## Contributing
 
-Contributions to this project are welcome! If you find a bug or have a feature request, please create an issue on the [GitHub repository](https://github.com/eone666/paper-telegram-notification/issues). If you would like to contribute code, please fork the repository and create a pull request.
+Contributions to this project are welcome! If you find a bug or have a feature request, please create an issue on the [GitHub repository](https://github.com/eone666/telegram-notifier/issues). If you would like to contribute code, please fork the repository and create a pull request.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/eone666/paper-telegram-notification/blob/main/LICENCE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/eone666/telegram-notifier/blob/main/LICENCE) file for details.
