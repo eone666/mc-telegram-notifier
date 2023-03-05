@@ -14,11 +14,19 @@ This plugin provides a way to receive notifications on a Telegram chat when a pl
 2. Open the `config.yml` file and set the `enabled` option to `true`.
 3. Obtain a Telegram Bot API token and chat ID. Follow [these instructions](https://core.telegram.org/bots#6-botfather) to create a bot and obtain the token, and [these instructions](https://stackoverflow.com/a/32572159) to obtain the chat ID.
 4. Set the `token` and `chatId` options in the `config.yml` file to the values obtained in step 3.
-5. Set the prefix option to a string that will be used as a prefix in the messages sent to the Telegram chat (optional).
+5. Set the `prefix` option to a string that will be used as a prefix in the messages sent to the Telegram chat (optional).
 
 ## Usage
 
 After configuring the plugin, you will receive a notification in the configured Telegram chat when a player joins or quits the server.
+
+![screenshot](https://github.com/eone666/paper-telegram-notification/raw/main/images/screenshot.png)
+
+## Roadmap
+
+- Add support for custom messages: Currently, the plugin sends a default message when a player joins or quits the server. Add support for custom messages that can be configured in the plugin's configuration file.
+- Add support for localization: Currently, the plugin only supports a single language. Consider adding support for localization, so that the plugin can be used in different regions and languages. This could be useful for servers with international player bases.
+- Add commands that help to set up the plugin without editing config manually.
 
 ## Used On
 
