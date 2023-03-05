@@ -2,7 +2,7 @@ package io.github.eone666.telegramjoinnotifications;
 
 import io.github.eone666.telegramjoinnotifications.events.PlayerJoin;
 import io.github.eone666.telegramjoinnotifications.events.PlayerQuit;
-import io.github.eone666.telegramjoinnotifications.events.utils.Telegram;
+import io.github.eone666.telegramjoinnotifications.utils.Telegram;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @SuppressWarnings("UNUSED")

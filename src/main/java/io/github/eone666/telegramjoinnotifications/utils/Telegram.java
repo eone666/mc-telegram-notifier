@@ -1,4 +1,4 @@
-package io.github.eone666.telegramjoinnotifications.events.utils;
+package io.github.eone666.telegramjoinnotifications.utils;
 
 import org.json.simple.JSONObject;
 

@@ -1,6 +1,6 @@
 package io.github.eone666.telegramjoinnotifications.events;
 
-import io.github.eone666.telegramjoinnotifications.events.utils.Telegram;
+import io.github.eone666.telegramjoinnotifications.utils.Telegram;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
