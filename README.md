@@ -12,7 +12,7 @@ This plugin provides a way to receive notifications on a Telegram chat when a pl
 
 1. After starting the server with the plugin installed, a `config.yml` file will be generated in the `plugins/TelegramNotifier` folder.
 2. Open the `config.yml` file and set the `enabled` option to `true`.
-3. Obtain a Telegram Bot API token and chat ID. Follow [these instructions](https://core.telegram.org/bots#6-botfather) to create a bot and obtain the token, and [these instructions](https://stackoverflow.com/a/32572159) to obtain the chat ID.
+3. Obtain a Telegram Bot API token and chat ID. Follow [these instructions](https://core.telegram.org/bots#how-do-i-create-a-bot) to create a bot and obtain the token, and [these instructions](https://stackoverflow.com/a/32572159) to obtain the chat ID.
 4. Set the `token` and `chatId` options in the `config.yml` file to the values obtained in step 3.
 5. Set the `prefix` option to a string that will be used as a prefix in the messages sent to the Telegram chat (optional).
 
