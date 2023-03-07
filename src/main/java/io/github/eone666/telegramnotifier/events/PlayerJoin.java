@@ -7,13 +7,14 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoin implements Listener {
 
-    private Telegram _tg = null;
+    private final Telegram _tg;
     public PlayerJoin(Telegram tg){
         _tg = tg;
     }
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         String playerName = event.getPlayer().getName();
-        _tg.SendMessage(String.format("%s has joined the game",playerName ));
+//        _tg.SendMessage(String.format("%s has joined the game",playerName ));
+        _tg.AddPlayer(playerName);
     }
 }

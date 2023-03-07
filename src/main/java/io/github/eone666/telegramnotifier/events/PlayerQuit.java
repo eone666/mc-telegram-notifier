@@ -7,13 +7,14 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerQuit implements Listener {
 
-    private Telegram _tg = null;
+    private final Telegram _tg;
     public PlayerQuit(Telegram tg){
         _tg = tg;
     }
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         String playerName = event.getPlayer().getName();
-        _tg.SendMessage(String.format("%s has left the game",playerName ));
+//        _tg.SendMessage(String.format("%s has left the game",playerName ));
+        _tg.RemovePlayer(playerName);
     }
 }

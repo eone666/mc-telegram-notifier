@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TelegramNotifier.main:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/TelegramNotifier_jar</output-path>
+    <root id="archive" name="TelegramNotifier.main.jar">
+      <element id="module-output" name="TelegramNotifier.main" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/plugin.yml" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/config.yml" />
+    </root>
+  </artifact>
+</component>
