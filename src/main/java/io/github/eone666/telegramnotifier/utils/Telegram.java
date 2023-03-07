@@ -44,7 +44,7 @@ public class Telegram {
 
             var client = HttpClient.newHttpClient();
 
-            String fullMessage = message + (_players.size() == 0 ? "No+players+online" : String.format("%s", String.join("%0A+-+", _players)));
+            String fullMessage = message + (_players.size() == 0 ? "No+players+online" : "+-+" + String.format("%s", String.join("%0A+-+", _players)));
 
 
             var request = HttpRequest.newBuilder()
