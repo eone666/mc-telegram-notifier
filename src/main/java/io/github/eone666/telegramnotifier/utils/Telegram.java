@@ -1,6 +1,7 @@
 package io.github.eone666.telegramnotifier.utils;
 
 import io.github.eone666.telegramnotifier.TelegramNotifier;
+import io.github.eone666.telegramnotifier.TelegramNotifier.Method;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -9,24 +10,21 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 
 public class Telegram {
-
+    public final Method _method;
     private final TelegramNotifier _plugin;
-    private final String _token ;
+    private final String _token;
     private final String _chatId;
     private final String _prefix;
-
     private final ArrayList<String> _players = new ArrayList<>();
-
     private final int _pinned;
 
-    private static final String message = "Hello!+Here+is+a+list+of+players+online:%0A";
-
-    public Telegram(TelegramNotifier plugin, String token, String chatId, String prefix, int pinned) {
+    public Telegram(TelegramNotifier plugin, String token, String chatId, String prefix, int pinned, Method method) {
         _plugin = plugin;
         _token = token;
         _chatId = chatId;
         _prefix = prefix;
         _pinned = pinned;
+        _method = method;
     }
 
     public void AddPlayer(String playerName) {
@@ -44,8 +42,7 @@ public class Telegram {
 
             var client = HttpClient.newHttpClient();
 
-            String fullMessage = message + (_players.size() == 0 ? "No+players+online" : "+-+" + String.format("%s", String.join("%0A+-+", _players)));
-
+            String fullMessage = _plugin.message + (_players.size() == 0 ? "No+players+online" : "+-+" + String.format("%s", String.join("%0A+-+", _players)));
 
             var request = HttpRequest.newBuilder()
                     .uri(
@@ -57,8 +54,6 @@ public class Telegram {
                             ))
                     )
                     .build();
-
-            _plugin.getLogger().info(request.uri().toString());
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 

@@ -1,5 +1,6 @@
 token: 'TOKEN_HERE'
 chatId: 'CHAT_ID_HERE'
+method: 'SEND'
 #prefix: 'Minecraft'
 enabled: false
 pinnedId: 0

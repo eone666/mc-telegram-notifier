@@ -15,7 +15,8 @@ This plugin provides a way to receive notifications on a Telegram chat when a pl
 3. Obtain a Telegram Bot API token and chat ID. Follow [these instructions](https://core.telegram.org/bots#how-do-i-create-a-bot) to create a bot and obtain the token, and [these instructions](https://stackoverflow.com/a/32572159) to obtain the chat ID.
 4. Set the `token` and `chatId` options in the `config.yml` file to the values obtained in step 3.
 5. Set the `prefix` option to a string that will be used as a prefix in the messages sent to the Telegram chat (optional).
-
+6. Set the `method` option to either `EDIT` or `SEND`. If set to `EDIT`, the plugin will edit a single message sent to the
+chat instead of sending a new message every time a player joins or quits the server (SEND is default).
 ## Usage
 
 After configuring the plugin, you will receive a notification in the configured Telegram chat when a player joins or quits the server.
