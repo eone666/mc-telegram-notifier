@@ -1,15 +1,19 @@
-token: 'TOKEN_HERE'
-chatId: 'CHAT_ID_HERE'
+token: '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11'
+chatId: 0
 # sending notifications as new message
 notifications:
   enabled: false
   prefix:
     enabled: false
     text: '[Minecraft] '
-#adds or removes players from an existing pinned message
+# adds or removes players from an existing pinned message
 playersList:
   enabled: false
-  messageId: 'MESSAGE_ID_HERE'
-  additionalInfo: |
-    here is your additional information that should be in the message
-    for example server ip address or project website
+  #message id must be a number
+  messageId: 0
+  topText:
+    enabled: false
+    # markdown supported
+    text: |
+      IP: 127.0.0.1:25565
+      Website: https://example.org

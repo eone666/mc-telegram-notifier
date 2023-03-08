@@ -2,23 +2,32 @@ package io.github.eone666.telegramnotifier;
 
 import io.github.eone666.telegramnotifier.events.PlayerJoin;
 import io.github.eone666.telegramnotifier.events.PlayerQuit;
+import io.github.eone666.telegramnotifier.features.Notifications;
+import io.github.eone666.telegramnotifier.features.PlayersList;
+import io.github.eone666.telegramnotifier.utils.Config;
 import io.github.eone666.telegramnotifier.utils.Telegram;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class TelegramNotifier extends JavaPlugin {
+
+    public Config config = new Config(this);
+
+    public Telegram tg = new Telegram(config.getToken());
+
+    public Notifications notifications = new Notifications(this);
+
+    public PlayersList playersList = new PlayersList(this);
 
     @Override
     public void onEnable() {
 
         saveDefaultConfig();
 
-        String token = getConfig().getString("token");
+        playersList.init();
 
-        Telegram tg = new Telegram(token);
+        getServer().getPluginManager().registerEvents(new PlayerJoin(this), this);
 
-        getServer().getPluginManager().registerEvents(new PlayerJoin(this,tg), this);
-
-        getServer().getPluginManager().registerEvents(new PlayerQuit(this,tg), this);
+        getServer().getPluginManager().registerEvents(new PlayerQuit(this), this);
 
         getLogger().info("Started successfully");
 

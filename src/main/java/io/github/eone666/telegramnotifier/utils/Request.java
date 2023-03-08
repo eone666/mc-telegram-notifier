@@ -1,8 +1,12 @@
 package io.github.eone666.telegramnotifier.utils;
 
 import org.bukkit.Bukkit;
-import org.checkerframework.checker.nullness.qual.Nullable;
+
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -10,17 +14,19 @@ import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 
-public class Request {
+public class Request  {
 
     private String _baseUrl = null;
 
     public Request(String baseUrl) {
         _baseUrl = baseUrl;
     }
-    @Nullable
-    public HttpResponse<String> postJson (String url, HashMap<String, String> data) {
 
-        HttpResponse<String> response = null;
+    private JSONParser jsonParser = new JSONParser();
+
+    public JSONObject postJson (String url, HashMap<String, String> data) {
+
+        JSONObject jsonResponse = null;
 
         try {
 
@@ -34,20 +40,22 @@ public class Request {
                     .POST(HttpRequest.BodyPublishers.ofString(jsonObject.toJSONString()))
                     .build();
 
-            Bukkit.getLogger().info(jsonObject.toJSONString());
-
             CompletableFuture<HttpResponse<String>> futureResponse = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
 
-            response = futureResponse.get();
+            HttpResponse response = futureResponse.get();
 
-            Bukkit.getLogger().info(response.body().toString());
-
+            try {
+                jsonResponse = (JSONObject) jsonParser.parse(response.body().toString());
+            } catch (Throwable err) {
+                Bukkit.getLogger().warning(err.getMessage());
+            }
 
         } catch (Throwable err) {
-            Bukkit.getLogger().info(err.getMessage());
+            Bukkit.getLogger().warning(err.getMessage());
         }
 
-        return response;
+
+        return jsonResponse;
     }
 
 }
