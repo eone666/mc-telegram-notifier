@@ -12,7 +12,7 @@ import java.net.http.HttpResponse;
 
 public final class TelegramNotifier extends JavaPlugin {
 
-    public final String message = "Players+online:%0A";
+    public final String message = "Online:%0A";
 
     @Override
     public void onEnable() {
