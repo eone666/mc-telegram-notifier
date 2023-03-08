@@ -17,9 +17,10 @@ public class PlayerQuit implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         String playerName = event.getPlayer().getName();
-        if (_tg._method == Method.EDIT) {
+        if (_tg._method == Method.EDIT || _tg._method == Method.BOTH) {
             _tg.RemovePlayer(playerName);
-        } else {
+        }
+        if (_tg._method == Method.SEND || _tg._method == Method.BOTH) {
             _tg.SendMessage(String.format("%s has left the game", playerName));
         }
     }

@@ -29,7 +29,7 @@ public final class TelegramNotifier extends JavaPlugin {
             int pinned = getConfig().getInt("pinnedId");
 
             //put behind feature select flag in config
-            if (method == Method.EDIT) {
+            if (method == Method.EDIT || method == Method.BOTH) {
                 int result = InitMessage(token, chatId, pinned);
                 if (pinned == 0) {
                     pinned = result;
@@ -95,6 +95,7 @@ public final class TelegramNotifier extends JavaPlugin {
 
     public enum Method {
         EDIT,
-        SEND
+        SEND,
+        BOTH
     }
 }

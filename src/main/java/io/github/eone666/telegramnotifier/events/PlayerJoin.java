@@ -17,9 +17,10 @@ public class PlayerJoin implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         String playerName = event.getPlayer().getName();
-        if (_tg._method == Method.EDIT) {
+        if (_tg._method == Method.EDIT || _tg._method == Method.BOTH) {
             _tg.AddPlayer(playerName);
-        } else {
+        }
+        if (_tg._method == Method.SEND || _tg._method == Method.BOTH) {
             _tg.SendMessage(String.format("%s has joined the game", playerName));
         }
     }
