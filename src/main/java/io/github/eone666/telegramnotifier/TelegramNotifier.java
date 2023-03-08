@@ -12,22 +12,13 @@ public final class TelegramNotifier extends JavaPlugin {
 
         saveDefaultConfig();
 
-        boolean isEnabled = getConfig().getBoolean("enabled");
+        String token = getConfig().getString("token");
 
-        if(isEnabled) {
+        Telegram tg = new Telegram(token);
 
-            String token = getConfig().getString("token");
-            String chatId = getConfig().getString("chatId");
-            String prefix = getConfig().getString("prefix");
+        getServer().getPluginManager().registerEvents(new PlayerJoin(this,tg), this);
 
-            Telegram tg = new Telegram(this, token, chatId, prefix);
-
-            getServer().getPluginManager().registerEvents(new PlayerJoin(tg), this);
-            getServer().getPluginManager().registerEvents(new PlayerQuit(tg), this);
-
-            getLogger().info("Events registered");
-
-        }
+        getServer().getPluginManager().registerEvents(new PlayerQuit(this,tg), this);
 
         getLogger().info("Started successfully");
 
