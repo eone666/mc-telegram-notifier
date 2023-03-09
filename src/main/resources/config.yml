@@ -11,7 +11,7 @@ playersList:
   enabled: false
   #message id must be a number
   messageId: 0
-  topText:
+  header:
     enabled: false
     # markdown supported
     text: |

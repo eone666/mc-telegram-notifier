@@ -33,11 +33,11 @@ public class Config {
     public int getPlayersListMessageId(){
         return plugin.getConfig().getInt("playersList.messageId");
     }
-    public boolean getIsPlayersListTopTextEnabled(){
-        return plugin.getConfig().getBoolean("playersList.topText.enabled");
+    public boolean getIsPlayersListHeaderEnabled(){
+        return plugin.getConfig().getBoolean("playersList.header.enabled");
     }
-    public String getPlayersListTopText(){
-        return plugin.getConfig().getString("playersList.topText.text");
+    public String getPlayersListHeaderText(){
+        return plugin.getConfig().getString("playersList.header.text");
     }
 
     public void setPlayersListMessageId (int id) {

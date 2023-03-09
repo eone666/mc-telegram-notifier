@@ -23,7 +23,9 @@ public final class TelegramNotifier extends JavaPlugin {
 
         saveDefaultConfig();
 
-        playersList.init();
+        if(config.getIsPlayersListEnabled()){
+            playersList.init();
+        }
 
         getServer().getPluginManager().registerEvents(new PlayerJoin(this), this);
 
@@ -35,6 +37,12 @@ public final class TelegramNotifier extends JavaPlugin {
 
     @Override
     public void onDisable() {
+
          getLogger().info("Shutting down...");
+
+        if(config.getIsPlayersListEnabled()){
+            playersList.disable();
+        }
+
     }
 }

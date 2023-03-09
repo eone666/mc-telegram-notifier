@@ -24,8 +24,8 @@ public class PlayersList {
         String playersTextByCount = playersCount == 0 ? "No players online" : "Players online:";
         String playerNames = players.stream().map(player -> player.getName()).map(Object::toString).collect(Collectors.joining("\n"));
         text = playersTextByCount + "\n" + playerNames;
-        if(plugin.config.getIsPlayersListTopTextEnabled()){
-            text = plugin.config.getPlayersListTopText() + "\n" + text;
+        if(plugin.config.getIsPlayersListHeaderEnabled()){
+            text = plugin.config.getPlayersListHeaderText() + "\n" + text;
         }
     }
 
@@ -52,6 +52,11 @@ public class PlayersList {
     }
 
     public void init () {
+        updateMessage();
+    }
+
+    public void disable () {
+        players.clear();
         updateMessage();
     }
 
