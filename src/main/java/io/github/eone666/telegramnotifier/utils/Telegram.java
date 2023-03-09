@@ -1,10 +1,7 @@
 package io.github.eone666.telegramnotifier.utils;
 
-import org.bukkit.Bukkit;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
-import java.net.http.HttpResponse;
 import java.util.HashMap;
 
 public class Telegram {
@@ -15,7 +12,7 @@ public class Telegram {
     }
 
 
-    public JSONObject sendMessage(int chatId, String text) {
+    public JSONObject sendMessage(String chatId, String text) {
         HashMap data = new HashMap(){
             {
                 put("chat_id", chatId);
@@ -25,7 +22,7 @@ public class Telegram {
 
         return request.postJson("sendMessage",data);
     }
-    public JSONObject sendMessage(int chatId, String text, String parseMode) {
+    public JSONObject sendMessage(String chatId, String text, String parseMode) {
         HashMap data = new HashMap(){
             {
                 put("chat_id", chatId);
@@ -37,7 +34,7 @@ public class Telegram {
         return request.postJson("sendMessage",data);
     }
 
-    public JSONObject editMessageText(int chatId, int messageId, String text) {
+    public JSONObject editMessageText(String chatId, int messageId, String text) {
 
         HashMap data = new HashMap(){
             {
@@ -51,7 +48,7 @@ public class Telegram {
 
     }
 
-    public JSONObject editMessageText(int chatId, int messageId, String text, String parseMode) {
+    public JSONObject editMessageText(String chatId, int messageId, String text, String parseMode) {
 
         HashMap data = new HashMap(){
             {
@@ -66,7 +63,7 @@ public class Telegram {
 
     }
 
-    public JSONObject pinChatMessage(int chatId, int messageId) {
+    public JSONObject pinChatMessage(String chatId, int messageId) {
 
         HashMap data = new HashMap(){
             {

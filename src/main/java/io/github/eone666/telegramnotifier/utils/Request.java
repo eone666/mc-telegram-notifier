@@ -1,12 +1,8 @@
 package io.github.eone666.telegramnotifier.utils;
 
 import org.bukkit.Bukkit;
-
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;

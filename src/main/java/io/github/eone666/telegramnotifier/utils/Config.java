@@ -1,7 +1,6 @@
 package io.github.eone666.telegramnotifier.utils;
 
 import io.github.eone666.telegramnotifier.TelegramNotifier;
-import org.bukkit.configuration.file.FileConfiguration;
 
 public class Config {
 
@@ -15,8 +14,8 @@ public class Config {
     public String getToken(){
         return plugin.getConfig().getString("token");
     }
-    public int getChatId(){
-        return plugin.getConfig().getInt("chatId");
+    public String getChatId(){
+        return plugin.getConfig().getString("chatId");
     }
     public boolean getIsNotificationsEnabled(){
         return plugin.getConfig().getBoolean("notifications.enabled");
