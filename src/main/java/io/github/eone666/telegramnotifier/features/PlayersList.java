@@ -2,6 +2,7 @@ package io.github.eone666.telegramnotifier.features;
 
 import io.github.eone666.telegramnotifier.TelegramNotifier;
 import io.github.eone666.telegramnotifier.utils.Telegram;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONObject;
 
