@@ -29,11 +29,43 @@ public class PlayersList {
     }
 
     private void sendNewMessageAndPin () {
-        JSONObject result = plugin.tg.sendMessage(plugin.config.getChatId(), text, "markdown");
-        JSONObject resultObject = (JSONObject) result.get("result");
-        int messageId = Integer.parseInt(resultObject.get("message_id").toString());
-        plugin.config.setPlayersListMessageId(messageId);
-        plugin.tg.pinChatMessage(plugin.config.getChatId(), messageId);
+        JSONObject response = plugin.tg.sendMessage(plugin.config.getChatId(), text, "markdown");
+
+        boolean isOk = Boolean.valueOf(response.get("ok").toString());
+        if(isOk){
+            JSONObject resultObject = (JSONObject) response.get("result");
+            int messageId = Integer.parseInt(resultObject.get("message_id").toString());
+            plugin.config.setPlayersListMessageId(messageId);
+            plugin.tg.pinChatMessage(plugin.config.getChatId(), messageId);
+        } else {
+            int errorCode = Integer.valueOf(response.get("error_code").toString());
+            String description = response.get("description").toString();
+            Bukkit.getLogger().warning(String.format("Error code: %s", errorCode));
+            Bukkit.getLogger().warning(description);
+        }
+    }
+
+    private void editMessage () {
+        JSONObject response = plugin.tg.editMessageText(
+                plugin.config.getChatId(),
+                plugin.config.getPlayersListMessageId(),
+                text, "markdown"
+        );
+
+        boolean isOk = Boolean.valueOf(response.get("ok").toString());
+        if(!isOk){
+            int errorCode = Integer.valueOf(response.get("error_code").toString());
+            String description = response.get("description").toString();
+
+            Bukkit.getLogger().warning(String.format("Error code: %s", errorCode));
+            Bukkit.getLogger().warning(description);
+
+            if (errorCode == 400 && description == "Bad Request: message to edit not found") {
+                Bukkit.getLogger().info("Sending new message");
+                sendNewMessageAndPin();
+            }
+
+        }
     }
 
     private void updateMessage () {
@@ -41,27 +73,7 @@ public class PlayersList {
         if(plugin.config.getPlayersListMessageId() == 0) {
             sendNewMessageAndPin();
         } else {
-            JSONObject response = plugin.tg.editMessageText(
-                    plugin.config.getChatId(),
-                    plugin.config.getPlayersListMessageId(),
-                    text, "markdown"
-            );
-
-            boolean isOk = Boolean.valueOf(response.get("ok").toString());
-            if(!isOk){
-                int errorCode = Integer.valueOf(response.get("error_code").toString());
-                String description = response.get("description").toString();
-
-                if (errorCode == 400 && description == "Bad Request: message to edit not found") {
-                    Bukkit.getLogger().warning("Message not found");
-                    Bukkit.getLogger().info("Sending new message");
-                    sendNewMessageAndPin();
-                } else {
-                    Bukkit.getLogger().warning(String.format("Error code: %s", errorCode));
-                    Bukkit.getLogger().warning(description);
-                }
-
-            }
+            editMessage();
         }}
 
     public void join (Player player) {
