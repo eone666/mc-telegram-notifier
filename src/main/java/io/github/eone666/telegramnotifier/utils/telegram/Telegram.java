@@ -5,16 +5,17 @@ import org.bukkit.Bukkit;
 import org.json.simple.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Telegram {
-    private Request request = null;
+    final private Request request;
 
     public Telegram (String token) {
         request = new Request(String.format("https://api.telegram.org/bot%s/", token));
     }
 
     private void handleErrors (JSONObject response) {
-        boolean isOk = Boolean.valueOf(response.get("ok").toString());
+        boolean isOk = Boolean.parseBoolean(response.get("ok").toString());
 
         if(!isOk){
             int errorCode = Integer.parseInt(response.get("error_code").toString());
@@ -25,7 +26,7 @@ public class Telegram {
     }
 
     public JSONObject sendMessage(String chatId, String text) {
-        HashMap data = new HashMap(){
+        Map<String, Object> data = new HashMap<>(){
             {
                 put("chat_id", chatId);
                 put("text", text);
@@ -38,12 +39,13 @@ public class Telegram {
 
         return response;
     }
+
     public JSONObject sendMessage(String chatId, String text, ParseMode parseMode) {
-        HashMap data = new HashMap(){
+        Map<String, Object> data = new HashMap<>(){
             {
                 put("chat_id", chatId);
                 put("text", text);
-                put("parse_mode",parseMode);
+                put("parse_mode",parseMode.toString());
             }
         };
 
@@ -56,7 +58,7 @@ public class Telegram {
 
     public JSONObject editMessageText(String chatId, int messageId, String text) {
 
-        HashMap data = new HashMap(){
+        Map<String, Object> data = new HashMap<>(){
             {
                 put("chat_id", chatId);
                 put("message_id", messageId);
@@ -74,12 +76,12 @@ public class Telegram {
 
     public JSONObject editMessageText(String chatId, int messageId, String text, ParseMode parseMode) {
 
-        HashMap data = new HashMap(){
+        Map<String, Object> data = new HashMap<>(){
             {
                 put("chat_id", chatId);
                 put("message_id", messageId);
                 put("text", text);
-                put("parse_mode",parseMode);
+                put("parse_mode",parseMode.toString());
             }
         };
 
@@ -93,7 +95,7 @@ public class Telegram {
 
     public JSONObject pinChatMessage(String chatId, int messageId) {
 
-        HashMap data = new HashMap(){
+        Map<String, Object> data = new HashMap<>(){
             {
                 put("chat_id", chatId);
                 put("message_id", messageId);

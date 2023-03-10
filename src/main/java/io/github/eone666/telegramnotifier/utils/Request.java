@@ -7,20 +7,20 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class Request  {
 
-    private String _baseUrl = null;
+    private final String _baseUrl;
 
     public Request(String baseUrl) {
         _baseUrl = baseUrl;
     }
 
-    private JSONParser jsonParser = new JSONParser();
+    private final JSONParser jsonParser = new JSONParser();
 
-    public JSONObject postJson (String url, HashMap<String, String> data) {
+    public JSONObject postJson (String url, Map<String, Object> data) {
 
         JSONObject jsonResponse = null;
 
@@ -38,10 +38,10 @@ public class Request  {
 
             CompletableFuture<HttpResponse<String>> futureResponse = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
 
-            HttpResponse response = futureResponse.get();
+            HttpResponse<String> response = futureResponse.get();
 
             try {
-                jsonResponse = (JSONObject) jsonParser.parse(response.body().toString());
+                jsonResponse = (JSONObject) jsonParser.parse(response.body());
             } catch (Throwable err) {
                 Bukkit.getLogger().warning(err.getMessage());
             }

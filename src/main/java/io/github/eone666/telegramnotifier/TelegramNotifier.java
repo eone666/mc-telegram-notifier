@@ -10,10 +10,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class TelegramNotifier extends JavaPlugin {
 
-    public Config config = new Config(this);
-    public Telegram tg = new Telegram(config.getToken());
-    public Notifications notifications = new Notifications(this);
-    public PlayersList playersList = new PlayersList(this);
+    public final Config config = new Config(this);
+    public final Telegram tg = new Telegram(config.getToken());
+    public final Notifications notifications = new Notifications(this);
+    public final PlayersList playersList = new PlayersList(this);
 
     @Override
     public void onEnable() {

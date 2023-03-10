@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 public class Notifications {
 
-    private TelegramNotifier plugin = null;
+    private final TelegramNotifier plugin;
 
     public Notifications (TelegramNotifier pluginInstance) {
         plugin = pluginInstance;

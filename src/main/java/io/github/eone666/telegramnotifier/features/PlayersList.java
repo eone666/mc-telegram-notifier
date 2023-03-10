@@ -7,13 +7,14 @@ import org.bukkit.entity.Player;
 import org.json.simple.JSONObject;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class PlayersList {
 
-    private TelegramNotifier plugin = null;
-    private Collection<Player> players = new HashSet<Player>();
-    String text = null;
+    private final TelegramNotifier plugin;
+    private final Collection<Player> players = new HashSet<>();
+    private String text;
 
     public PlayersList (TelegramNotifier pluginInstance) {
         plugin = pluginInstance;
@@ -22,7 +23,7 @@ public class PlayersList {
     private void buildText() {
         int playersCount = players.size();
         String playersTextByCount = playersCount == 0 ? "No players online" : "Players online:";
-        String playerNames = players.stream().map(player -> player.getName()).map(Object::toString).collect(Collectors.joining("\n"));
+        String playerNames = players.stream().map(Player::getName).collect(Collectors.joining("\n"));
         text = playersTextByCount + "\n" + playerNames;
         if(plugin.config.getIsPlayersListHeaderEnabled()){
             text = plugin.config.getPlayersListHeaderText() + "\n" + text;
@@ -32,7 +33,7 @@ public class PlayersList {
     private void sendNewMessageAndPin () {
         JSONObject response = plugin.tg.sendMessage(plugin.config.getChatId(), text, ParseMode.MARKDOWN);
 
-        boolean isOk = Boolean.valueOf(response.get("ok").toString());
+        boolean isOk = Boolean.parseBoolean(response.get("ok").toString());
         if(isOk){
             JSONObject resultObject = (JSONObject) response.get("result");
             int messageId = Integer.parseInt(resultObject.get("message_id").toString());
@@ -49,12 +50,12 @@ public class PlayersList {
                 ParseMode.MARKDOWN
         );
 
-        boolean isOk = Boolean.valueOf(response.get("ok").toString());
+        boolean isOk = Boolean.parseBoolean(response.get("ok").toString());
         if(!isOk){
-            int errorCode = Integer.valueOf(response.get("error_code").toString());
+            int errorCode = Integer.parseInt(response.get("error_code").toString());
             String description = response.get("description").toString();
 
-            if (errorCode == 400 && description == "Bad Request: message to edit not found") {
+            if (errorCode == 400 && Objects.equals(description, "Bad Request: message to edit not found")) {
                 Bukkit.getLogger().info("Sending new message");
                 sendNewMessageAndPin();
             }

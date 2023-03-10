@@ -1,15 +1,13 @@
 package io.github.eone666.telegramnotifier.events;
 
 import io.github.eone666.telegramnotifier.TelegramNotifier;
-import io.github.eone666.telegramnotifier.utils.telegram.Telegram;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoin implements Listener {
 
-    private Telegram tg = null;
-    private TelegramNotifier plugin = null;
+    private final TelegramNotifier plugin;
     public PlayerJoin(TelegramNotifier pluginInstance){
         plugin = pluginInstance;
     }

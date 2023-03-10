@@ -4,7 +4,7 @@ import io.github.eone666.telegramnotifier.TelegramNotifier;
 
 public class Config {
 
-    TelegramNotifier plugin = null;
+    private final TelegramNotifier plugin;
     public Config(TelegramNotifier pluginInstance) {
 
         plugin = pluginInstance;
