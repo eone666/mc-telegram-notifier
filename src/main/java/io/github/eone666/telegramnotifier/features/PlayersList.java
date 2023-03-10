@@ -37,11 +37,6 @@ public class PlayersList {
             int messageId = Integer.parseInt(resultObject.get("message_id").toString());
             plugin.config.setPlayersListMessageId(messageId);
             plugin.tg.pinChatMessage(plugin.config.getChatId(), messageId);
-        } else {
-            int errorCode = Integer.valueOf(response.get("error_code").toString());
-            String description = response.get("description").toString();
-            Bukkit.getLogger().warning(String.format("Error code: %s", errorCode));
-            Bukkit.getLogger().warning(description);
         }
     }
 
@@ -57,14 +52,10 @@ public class PlayersList {
             int errorCode = Integer.valueOf(response.get("error_code").toString());
             String description = response.get("description").toString();
 
-            Bukkit.getLogger().warning(String.format("Error code: %s", errorCode));
-            Bukkit.getLogger().warning(description);
-
             if (errorCode == 400 && description == "Bad Request: message to edit not found") {
                 Bukkit.getLogger().info("Sending new message");
                 sendNewMessageAndPin();
             }
-
         }
     }
 
