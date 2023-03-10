@@ -1,7 +1,9 @@
 package io.github.eone666.telegramnotifier.utils;
 
+import org.bukkit.Bukkit;
 import org.json.simple.JSONObject;
 
+import java.net.http.HttpResponse;
 import java.util.HashMap;
 
 public class Telegram {
@@ -11,6 +13,16 @@ public class Telegram {
         request = new Request(String.format("https://api.telegram.org/bot%s/", token));
     }
 
+    private void handleErrors (JSONObject response) {
+        boolean isOk = Boolean.valueOf(response.get("ok").toString());
+
+        if(!isOk){
+            int errorCode = Integer.parseInt(response.get("error_code").toString());
+            String description = response.get("description").toString();
+            Bukkit.getLogger().warning(String.format("Error code: %s", errorCode));
+            Bukkit.getLogger().warning(String.format("Description: %s",description));
+        }
+    }
 
     public JSONObject sendMessage(String chatId, String text) {
         HashMap data = new HashMap(){
@@ -20,7 +32,11 @@ public class Telegram {
             }
         };
 
-        return request.postJson("sendMessage",data);
+        JSONObject response =  request.postJson("sendMessage",data);
+
+        handleErrors(response);
+
+        return response;
     }
     public JSONObject sendMessage(String chatId, String text, String parseMode) {
         HashMap data = new HashMap(){
@@ -31,7 +47,11 @@ public class Telegram {
             }
         };
 
-        return request.postJson("sendMessage",data);
+        JSONObject response = request.postJson("sendMessage",data);
+
+        handleErrors(response);
+
+        return response;
     }
 
     public JSONObject editMessageText(String chatId, int messageId, String text) {
@@ -44,7 +64,11 @@ public class Telegram {
             }
         };
 
-        return request.postJson("editMessageText",data);
+        JSONObject response = request.postJson("editMessageText",data);
+
+        handleErrors(response);
+
+        return response;
 
     }
 
@@ -59,7 +83,11 @@ public class Telegram {
             }
         };
 
-        return request.postJson("editMessageText",data);
+        JSONObject response = request.postJson("editMessageText",data);
+
+        handleErrors(response);
+
+        return response;
 
     }
 
@@ -72,7 +100,11 @@ public class Telegram {
             }
         };
 
-        return request.postJson("pinChatMessage",data);
+        JSONObject response = request.postJson("pinChatMessage",data);
+
+        handleErrors(response);
+
+        return response;
 
     }
 
