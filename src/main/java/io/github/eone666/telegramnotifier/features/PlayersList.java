@@ -1,6 +1,7 @@
 package io.github.eone666.telegramnotifier.features;
 
 import io.github.eone666.telegramnotifier.TelegramNotifier;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONObject;
 import java.util.Collection;
@@ -27,16 +28,40 @@ public class PlayersList {
         }
     }
 
+    private void sendNewMessageAndPin () {
+        JSONObject result = plugin.tg.sendMessage(plugin.config.getChatId(), text, "markdown");
+        JSONObject resultObject = (JSONObject) result.get("result");
+        int messageId = Integer.parseInt(resultObject.get("message_id").toString());
+        plugin.config.setPlayersListMessageId(messageId);
+        plugin.tg.pinChatMessage(plugin.config.getChatId(), messageId);
+    }
+
     private void updateMessage () {
         buildText();
         if(plugin.config.getPlayersListMessageId() == 0) {
-            JSONObject result = plugin.tg.sendMessage(plugin.config.getChatId(), text, "markdown");
-            JSONObject resultObject = (JSONObject) result.get("result");
-            int messageId = Integer.parseInt(resultObject.get("message_id").toString());
-            plugin.config.setPlayersListMessageId(messageId);
-            plugin.tg.pinChatMessage(plugin.config.getChatId(), messageId);
+            sendNewMessageAndPin();
         } else {
-            plugin.tg.editMessageText(plugin.config.getChatId(), plugin.config.getPlayersListMessageId(), text, "markdown");
+            JSONObject response = plugin.tg.editMessageText(
+                    plugin.config.getChatId(),
+                    plugin.config.getPlayersListMessageId(),
+                    text, "markdown"
+            );
+
+            boolean isOk = Boolean.valueOf(response.get("ok").toString());
+            if(!isOk){
+                int errorCode = Integer.valueOf(response.get("error_code").toString());
+                String description = response.get("description").toString();
+
+                if (errorCode == 400 && description == "Bad Request: message to edit not found") {
+                    Bukkit.getLogger().warning("Message not found");
+                    Bukkit.getLogger().info("Sending new message");
+                    sendNewMessageAndPin();
+                } else {
+                    Bukkit.getLogger().warning(String.format("Error code: %s", errorCode));
+                    Bukkit.getLogger().warning(description);
+                }
+
+            }
         }}
 
     public void join (Player player) {
