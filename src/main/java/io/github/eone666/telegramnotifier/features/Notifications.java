@@ -25,11 +25,15 @@ public class Notifications {
     }
 
     public void join (Player player) {
-        this.sendMessage(String.format("%s has join the game", player.getName()));
-    }
-    public void quit (Player player) {
-        this.sendMessage(String.format("%s has left the game", player.getName()));
+        if(plugin.config.getIsNotificationsEnabled()){
+            this.sendMessage(String.format("%s has join the game", player.getName()));
+        }
     }
 
+    public void quit (Player player) {
+        if(plugin.config.getIsNotificationsEnabled()){
+            this.sendMessage(String.format("%s has left the game", player.getName()));
+        }
+    }
 
 }

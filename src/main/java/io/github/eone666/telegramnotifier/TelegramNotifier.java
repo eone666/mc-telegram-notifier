@@ -11,38 +11,26 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class TelegramNotifier extends JavaPlugin {
 
     public Config config = new Config(this);
-
     public Telegram tg = new Telegram(config.getToken());
-
     public Notifications notifications = new Notifications(this);
-
     public PlayersList playersList = new PlayersList(this);
 
     @Override
     public void onEnable() {
-
         saveDefaultConfig();
-
-        if(config.getIsPlayersListEnabled()){
-            playersList.init();
-        }
-
+        //init features
+        playersList.init();
+        //register events
         getServer().getPluginManager().registerEvents(new PlayerJoin(this), this);
-
         getServer().getPluginManager().registerEvents(new PlayerQuit(this), this);
 
         getLogger().info("Started successfully");
-
     }
 
     @Override
     public void onDisable() {
-
          getLogger().info("Shutting down...");
-
-        if(config.getIsPlayersListEnabled()){
-            playersList.disable();
-        }
-
+         //disable features
+         playersList.disable();
     }
 }

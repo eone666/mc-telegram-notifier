@@ -68,22 +68,30 @@ public class PlayersList {
         }}
 
     public void join (Player player) {
-        players.add(player);
-        updateMessage();
+        if(plugin.config.getIsPlayersListEnabled()){
+            players.add(player);
+            updateMessage();
+        }
     }
 
     public void quit (Player player) {
-        players.remove(player);
-        updateMessage();
+        if(plugin.config.getIsPlayersListEnabled()){
+            players.remove(player);
+            updateMessage();
+        }
     }
 
     public void init () {
-        updateMessage();
+        if(plugin.config.getIsPlayersListEnabled()){
+            updateMessage();
+        }
     }
 
     public void disable () {
-        players.clear();
-        updateMessage();
+        if(plugin.config.getIsPlayersListEnabled()){
+            players.clear();
+            updateMessage();
+        }
     }
 
 }

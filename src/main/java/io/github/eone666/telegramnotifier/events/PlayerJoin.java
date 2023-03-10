@@ -15,12 +15,7 @@ public class PlayerJoin implements Listener {
     }
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        if(plugin.config.getIsNotificationsEnabled()) {
-            plugin.notifications.join(event.getPlayer());
-        }
-
-        if(plugin.config.getIsPlayersListEnabled()) {
-            plugin.playersList.join(event.getPlayer());
-        }
+        plugin.notifications.join(event.getPlayer());
+        plugin.playersList.join(event.getPlayer());
     }
 }

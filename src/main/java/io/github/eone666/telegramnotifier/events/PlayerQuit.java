@@ -15,12 +15,7 @@ public class PlayerQuit implements Listener {
     }
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        if(plugin.config.getIsNotificationsEnabled()) {
-            plugin.notifications.quit(event.getPlayer());
-        }
-
-        if(plugin.config.getIsPlayersListEnabled()) {
-            plugin.playersList.quit(event.getPlayer());
-        }
+        plugin.notifications.quit(event.getPlayer());
+        plugin.playersList.quit(event.getPlayer());
     }
 }
