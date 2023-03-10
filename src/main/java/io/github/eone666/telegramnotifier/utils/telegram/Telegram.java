@@ -1,9 +1,9 @@
-package io.github.eone666.telegramnotifier.utils;
+package io.github.eone666.telegramnotifier.utils.telegram;
 
+import io.github.eone666.telegramnotifier.utils.Request;
 import org.bukkit.Bukkit;
 import org.json.simple.JSONObject;
 
-import java.net.http.HttpResponse;
 import java.util.HashMap;
 
 public class Telegram {
@@ -38,7 +38,7 @@ public class Telegram {
 
         return response;
     }
-    public JSONObject sendMessage(String chatId, String text, String parseMode) {
+    public JSONObject sendMessage(String chatId, String text, ParseMode parseMode) {
         HashMap data = new HashMap(){
             {
                 put("chat_id", chatId);
@@ -72,7 +72,7 @@ public class Telegram {
 
     }
 
-    public JSONObject editMessageText(String chatId, int messageId, String text, String parseMode) {
+    public JSONObject editMessageText(String chatId, int messageId, String text, ParseMode parseMode) {
 
         HashMap data = new HashMap(){
             {

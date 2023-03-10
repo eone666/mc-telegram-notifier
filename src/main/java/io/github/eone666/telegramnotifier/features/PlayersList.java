@@ -1,6 +1,7 @@
 package io.github.eone666.telegramnotifier.features;
 
 import io.github.eone666.telegramnotifier.TelegramNotifier;
+import io.github.eone666.telegramnotifier.utils.telegram.ParseMode;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONObject;
@@ -29,7 +30,7 @@ public class PlayersList {
     }
 
     private void sendNewMessageAndPin () {
-        JSONObject response = plugin.tg.sendMessage(plugin.config.getChatId(), text, "markdown");
+        JSONObject response = plugin.tg.sendMessage(plugin.config.getChatId(), text, ParseMode.MARKDOWN);
 
         boolean isOk = Boolean.valueOf(response.get("ok").toString());
         if(isOk){
@@ -44,7 +45,8 @@ public class PlayersList {
         JSONObject response = plugin.tg.editMessageText(
                 plugin.config.getChatId(),
                 plugin.config.getPlayersListMessageId(),
-                text, "markdown"
+                text,
+                ParseMode.MARKDOWN
         );
 
         boolean isOk = Boolean.valueOf(response.get("ok").toString());

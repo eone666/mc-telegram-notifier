@@ -5,7 +5,7 @@ import io.github.eone666.telegramnotifier.events.PlayerQuit;
 import io.github.eone666.telegramnotifier.features.Notifications;
 import io.github.eone666.telegramnotifier.features.PlayersList;
 import io.github.eone666.telegramnotifier.utils.Config;
-import io.github.eone666.telegramnotifier.utils.Telegram;
+import io.github.eone666.telegramnotifier.utils.telegram.Telegram;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class TelegramNotifier extends JavaPlugin {
