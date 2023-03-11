@@ -2,3 +2,6 @@ name: TelegramNotifier
 version: '${version}'
 main: io.github.eone666.telegramnotifier.TelegramNotifier
 api-version: 1.19
+libraries:
+  - "org.jetbrains.kotlin:kotlin-stdlib:1.8.10"
+# Line above is from build.gradle
