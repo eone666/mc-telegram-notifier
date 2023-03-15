@@ -2,7 +2,7 @@ package io.github.eone666.telegramnotifier
 
 import io.github.eone666.telegramnotifier.events.PlayerJoin
 import io.github.eone666.telegramnotifier.events.PlayerQuit
-import io.github.eone666.telegramnotifier.features.Notifications
+import io.github.eone666.telegramnotifier.features.notifications.Notifications
 import io.github.eone666.telegramnotifier.features.PlayersList
 import io.github.eone666.telegramnotifier.utils.Config
 import io.github.eone666.telegramnotifier.utils.telegram.Telegram
@@ -26,6 +26,6 @@ class TelegramNotifier : JavaPlugin() {
     override fun onDisable() {
         getLogger().info("Shutting down...")
         //disable features
-        playersList.disable()
+        playersList.clear()
     }
 }

@@ -8,7 +8,8 @@ notifications:
     text: "[Minecraft] "
 # adds or removes players from an existing pinned message
 playersList:
-  enabled: false
+  playerJoin: false
+  playerQuit: false
   #message id must be a number
   messageId: "0"
   header:
@@ -17,3 +18,8 @@ playersList:
     text: |
       IP: 127.0.0.1:25565
       Website: https://example.org
+  footer:
+    enabled: false
+    # markdown supported
+    text: |
+      Author: [Example](https://link.to/personal-page)

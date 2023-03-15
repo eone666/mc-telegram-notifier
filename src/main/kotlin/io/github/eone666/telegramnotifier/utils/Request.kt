@@ -8,15 +8,16 @@ import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
-class Request(private val _baseUrl: String) {
+class Request(private val baseUrl: String) {
     private val jsonParser = JSONParser()
-    fun postJson(url: String, data: Map<String?, Any?>?): JSONObject? {
+    fun postJson(url: String, data: Map<String, Any>): JSONObject? {
         var jsonResponse: JSONObject? = null
+
         try {
             val client = HttpClient.newHttpClient()
             val jsonObject = JSONObject(data)
             val request = HttpRequest.newBuilder()
-                .uri(URI.create(_baseUrl + url))
+                .uri(URI.create(baseUrl + url))
                 .setHeader("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(jsonObject.toJSONString()))
                 .build()

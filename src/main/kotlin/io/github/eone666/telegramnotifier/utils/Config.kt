@@ -1,28 +1,38 @@
 package io.github.eone666.telegramnotifier.utils
 
 import io.github.eone666.telegramnotifier.TelegramNotifier
+import org.bukkit.configuration.file.FileConfiguration
 
 class Config(private val plugin: TelegramNotifier) {
+
+    private val config: FileConfiguration = plugin.getConfig()
     val token: String
-        get() = plugin.getConfig().getString("token")!!
+        get() = config.getString("token")!!
     val chatId: String
-        get() = plugin.getConfig().getString("chatId")!!
-    val isNotificationsEnabled: Boolean
-        get() = plugin.getConfig().getBoolean("notifications.enabled")
+        get() = config.getString("chatId")!!
+    val isNotificationsPlayerJoinEnabled: Boolean
+        get() = config.getBoolean("notifications.playerJoin")
+    val isNotificationsPlayerQuitEnabled: Boolean
+        get() = config.getBoolean("notifications.playerQuit")
     val isNotificationsPrefixEnabled: Boolean
-        get() = plugin.getConfig().getBoolean("notifications.prefix.enabled")
+        get() = config.getBoolean("notifications.prefix.enabled")
     val notificationsPrefixText: String
-        get() = plugin.getConfig().getString("notifications.prefix.text")!!
+        get() = config.getString("notifications.prefix.text")!!
     val isPlayersListEnabled: Boolean
-        get() = plugin.getConfig().getBoolean("playersList.enabled")
+        get() = config.getBoolean("playersList.enabled")
     var playersListMessageId: Int
-        get() = plugin.getConfig().getInt("playersList.messageId")
+        get() = config.getInt("playersList.messageId")
         set(id) {
-            plugin.getConfig()["playersList.messageId"] = id
+            config.set("playersList.messageId", id)
             plugin.saveConfig()
         }
     val isPlayersListHeaderEnabled: Boolean
-        get() = plugin.getConfig().getBoolean("playersList.header.enabled")
+        get() = config.getBoolean("playersList.header.enabled")
     val playersListHeaderText: String
-        get() = plugin.getConfig().getString("playersList.header.text")!!
+        get() = config.getString("playersList.header.text")!!
+
+    val isPlayersListFooterEnabled: Boolean
+        get() = config.getBoolean("playersList.footer.enabled")
+    val playersListFooterText: String
+        get() = config.getString("playersList.footer.text")!!
 }

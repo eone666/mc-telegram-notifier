@@ -11,31 +11,30 @@ import kotlin.toString
 
 class PlayersList(private val plugin: TelegramNotifier) {
     private val players: MutableCollection<Player> = HashSet()
-    private var text: String? = null
+    private var text: String = ""
     private fun buildText() {
         val playersCount = players.size
         val playersTextByCount = if (playersCount == 0) "No players online" else "Players online:"
         val playerNames = players.stream().map { obj: Player -> obj.name }.collect(Collectors.joining("\n"))
-        text = """
-            $playersTextByCount
-            $playerNames
-            """.trimIndent()
+        text = "$playersTextByCount\n$playerNames"
         if (plugin.config.isPlayersListHeaderEnabled) {
-            text = """
-                ${plugin.config.playersListHeaderText}
-                $text
-                """.trimIndent()
+            text = "${plugin.config.playersListHeaderText}\n$text"
+        }
+        if (plugin.config.isPlayersListFooterEnabled) {
+            text = "$text\n\n${plugin.config.playersListFooterText}"
         }
     }
 
     private fun sendNewMessageAndPin() {
-        val response = plugin.tg.sendMessage(plugin.config.chatId, text, ParseMode.MARKDOWN)!!
-        val isOk = response["ok"].toString().toBooleanStrict()
-        if (isOk) {
-            val resultObject = response["result"] as JSONObject
-            val messageId = resultObject["message_id"].toString().toInt()
-            plugin.config.playersListMessageId = messageId
-            plugin.tg.pinChatMessage(plugin.config.chatId, messageId)
+        val response = plugin.tg.sendMessage(plugin.config.chatId, text,false, ParseMode.MARKDOWN)
+        if(response != null){
+            val isOk = response["ok"].toString().toBooleanStrict()
+            if (isOk) {
+                val resultObject = response["result"] as JSONObject
+                val messageId = resultObject["message_id"].toString().toInt()
+                plugin.config.playersListMessageId = messageId
+                plugin.tg.pinChatMessage(plugin.config.chatId, messageId)
+            }
         }
     }
 
@@ -44,15 +43,18 @@ class PlayersList(private val plugin: TelegramNotifier) {
             plugin.config.chatId,
             plugin.config.playersListMessageId,
             text,
+            false,
             ParseMode.MARKDOWN
-        )!!
-        val isOk = response["ok"].toString().toBooleanStrict()
-        if (!isOk) {
-            val errorCode = response["error_code"]!!.toString().toInt()
-            val description = response["description"]!!.toString()
-            if (errorCode == 400 && description == "Bad Request: message to edit not found") {
-                Bukkit.getLogger().info("Sending new message")
-                sendNewMessageAndPin()
+        )
+        if(response != null){
+            val isOk = response["ok"].toString().toBooleanStrict()
+            if (!isOk) {
+                val errorCode = response["error_code"].toString().toInt()
+                val description = response["description"].toString()
+                if (errorCode == 400 && description == "Bad Request: message to edit not found") {
+                    Bukkit.getLogger().info("Sending new message")
+                    sendNewMessageAndPin()
+                }
             }
         }
     }
@@ -66,14 +68,14 @@ class PlayersList(private val plugin: TelegramNotifier) {
         }
     }
 
-    fun join(player: Player) {
+    fun add(player: Player) {
         if (plugin.config.isPlayersListEnabled) {
             players.add(player)
             updateMessage()
         }
     }
 
-    fun quit(player: Player) {
+    fun remove(player: Player) {
         if (plugin.config.isPlayersListEnabled) {
             players.remove(player)
             updateMessage()
@@ -86,7 +88,7 @@ class PlayersList(private val plugin: TelegramNotifier) {
         }
     }
 
-    fun disable() {
+    fun clear() {
         if (plugin.config.isPlayersListEnabled) {
             players.clear()
             updateMessage()
