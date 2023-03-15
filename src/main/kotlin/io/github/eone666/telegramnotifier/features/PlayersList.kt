@@ -14,12 +14,14 @@ class PlayersList(private val plugin: TelegramNotifier) {
     private var text: String = ""
     private fun buildText() {
         val playersCount = players.size
-        val playersTextByCount = if (playersCount == 0) "No players online" else "Players online:"
         val playerNames = players.stream().map { obj: Player -> obj.name }.collect(Collectors.joining("\n"))
-        text = "$playersTextByCount\n$playerNames"
+
+        text = if (playersCount == 0) "No players online" else "Players online:\n$playerNames"
+
         if (plugin.config.isPlayersListHeaderEnabled) {
             text = "${plugin.config.playersListHeaderText}\n$text"
         }
+
         if (plugin.config.isPlayersListFooterEnabled) {
             text = "$text\n\n${plugin.config.playersListFooterText}"
         }
