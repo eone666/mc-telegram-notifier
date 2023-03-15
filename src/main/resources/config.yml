@@ -17,7 +17,7 @@ playersList:
     # markdown supported
     text: |
       IP: 127.0.0.1:25565
-      Website: https://example.org
+      Website: [https://example.org](https://example.org)
   footer:
     enabled: false
     # markdown supported
