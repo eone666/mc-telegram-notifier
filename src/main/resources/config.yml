@@ -11,7 +11,7 @@ notifications:
 playersList:
   enabled: false
   #message id must be a number
-  messageId: "0"
+  messageId: 0
   header:
     enabled: false
     # markdown supported
