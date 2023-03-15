@@ -2,14 +2,14 @@ token: "123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11"
 chatId: "0000000000000"
 # sending notifications as new message
 notifications:
-  enabled: false
+  playerJoin: false
+  playerQuit: false
   prefix:
     enabled: false
     text: "[Minecraft] "
 # adds or removes players from an existing pinned message
 playersList:
-  playerJoin: false
-  playerQuit: false
+  enabled: false
   #message id must be a number
   messageId: "0"
   header:
