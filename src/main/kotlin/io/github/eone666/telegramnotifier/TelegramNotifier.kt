@@ -10,14 +10,20 @@ import io.github.eone666.telegramnotifier.utils.telegram.Telegram
 import org.bukkit.plugin.java.JavaPlugin
 
 class TelegramNotifier : JavaPlugin() {
-    val config = Config()
-    val tg = Telegram(config.token)
-    val notifications = Notifications()
-    val playersList = PlayersList()
+    lateinit var config: Config
+    lateinit var tg: Telegram
+    lateinit var notifications: Notifications
+    lateinit var playersList: PlayersList
+
     override fun onEnable() {
         instance = this
 
+        config = Config()
         saveDefaultConfig()
+
+        tg = Telegram(config.token)
+        notifications = Notifications()
+        playersList = PlayersList()
         //init features
         playersList.init()
         //register events
