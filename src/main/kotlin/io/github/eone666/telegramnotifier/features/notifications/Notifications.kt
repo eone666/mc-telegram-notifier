@@ -1,6 +1,8 @@
 package io.github.eone666.telegramnotifier.features.notifications
 
 import io.github.eone666.telegramnotifier.TelegramNotifier
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
+import org.bukkit.advancement.Advancement
 import org.bukkit.entity.Player
 
 class Notifications(private val plugin: TelegramNotifier) {
@@ -24,6 +26,13 @@ class Notifications(private val plugin: TelegramNotifier) {
                     sendMessage(String.format("%s has left the game", player.name))
                 }
             }
+        }
+    }
+    fun sendAdvancement(player: Player, advancement: Advancement){
+        if (plugin.config.isNotificationsPlayerAdvancementEnabled) {
+            val playerName = player.name
+            val advancementName: String = PlainTextComponentSerializer.plainText().serialize(advancement.displayName())
+            sendMessage("Player $playerName got advancement $advancementName")
         }
     }
 }
