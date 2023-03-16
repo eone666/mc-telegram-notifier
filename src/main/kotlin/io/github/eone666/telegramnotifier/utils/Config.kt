@@ -20,6 +20,10 @@ class Config(private val plugin: TelegramNotifier) {
         get() = config.getString("notifications.prefix.text")!!
     val isPlayersListEnabled: Boolean
         get() = config.getBoolean("playersList.enabled")
+
+    val isNotificationsPlayerAdvancementEnabled: Boolean
+        get() = config.getBoolean("notifications.playerAdvancement")
+
     var playersListMessageId: Int
         get() = config.getInt("playersList.messageId")
         set(id) {

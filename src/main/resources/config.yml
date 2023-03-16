@@ -4,6 +4,7 @@ chatId: "0000000000000"
 notifications:
   playerJoin: false
   playerQuit: false
+  playerAdvancement: false
   prefix:
     enabled: false
     text: "[Minecraft] "
