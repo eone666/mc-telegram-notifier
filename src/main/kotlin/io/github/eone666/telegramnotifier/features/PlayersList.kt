@@ -1,15 +1,14 @@
 package io.github.eone666.telegramnotifier.features
 
-import io.github.eone666.telegramnotifier.TelegramNotifier
+import io.github.eone666.telegramnotifier.pluginInstance
 import io.github.eone666.telegramnotifier.utils.telegram.ParseMode
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.json.simple.JSONObject
 import java.util.stream.Collectors
-import kotlin.String
 import kotlin.toString
 
-class PlayersList(private val plugin: TelegramNotifier) {
+class PlayersList() {
     private val players: MutableCollection<Player> = HashSet()
     private var text: String = ""
     private fun buildText() {
@@ -18,32 +17,32 @@ class PlayersList(private val plugin: TelegramNotifier) {
 
         text = if (playersCount == 0) "No players online" else "Players online:\n$playerNames"
 
-        if (plugin.config.isPlayersListHeaderEnabled) {
-            text = "${plugin.config.playersListHeaderText}\n$text"
+        if (pluginInstance.config.isPlayersListHeaderEnabled) {
+            text = "${pluginInstance.config.playersListHeaderText}\n$text"
         }
 
-        if (plugin.config.isPlayersListFooterEnabled) {
-            text = "$text\n\n${plugin.config.playersListFooterText}"
+        if (pluginInstance.config.isPlayersListFooterEnabled) {
+            text = "$text\n\n${pluginInstance.config.playersListFooterText}"
         }
     }
 
     private fun sendNewMessageAndPin() {
-        val response = plugin.tg.sendMessage(plugin.config.chatId, text,false, ParseMode.MARKDOWN)
+        val response = pluginInstance.tg.sendMessage(pluginInstance.config.chatId, text,false, ParseMode.MARKDOWN)
         if(response != null){
             val isOk = response["ok"].toString().toBooleanStrict()
             if (isOk) {
                 val resultObject = response["result"] as JSONObject
                 val messageId = resultObject["message_id"].toString().toInt()
-                plugin.config.playersListMessageId = messageId
-                plugin.tg.pinChatMessage(plugin.config.chatId, messageId)
+                pluginInstance.config.playersListMessageId = messageId
+                pluginInstance.tg.pinChatMessage(pluginInstance.config.chatId, messageId)
             }
         }
     }
 
     private fun editMessage() {
-        val response = plugin.tg.editMessageText(
-            plugin.config.chatId,
-            plugin.config.playersListMessageId,
+        val response = pluginInstance.tg.editMessageText(
+            pluginInstance.config.chatId,
+            pluginInstance.config.playersListMessageId,
             text,
             false,
             ParseMode.MARKDOWN
@@ -63,7 +62,7 @@ class PlayersList(private val plugin: TelegramNotifier) {
 
     private fun updateMessage() {
         buildText()
-        if (plugin.config.playersListMessageId == 0) {
+        if (pluginInstance.config.playersListMessageId == 0) {
             sendNewMessageAndPin()
         } else {
             editMessage()
@@ -71,27 +70,27 @@ class PlayersList(private val plugin: TelegramNotifier) {
     }
 
     fun add(player: Player) {
-        if (plugin.config.isPlayersListEnabled) {
+        if (pluginInstance.config.isPlayersListEnabled) {
             players.add(player)
             updateMessage()
         }
     }
 
     fun remove(player: Player) {
-        if (plugin.config.isPlayersListEnabled) {
+        if (pluginInstance.config.isPlayersListEnabled) {
             players.remove(player)
             updateMessage()
         }
     }
 
     fun init() {
-        if (plugin.config.isPlayersListEnabled) {
+        if (pluginInstance.config.isPlayersListEnabled) {
             updateMessage()
         }
     }
 
     fun clear() {
-        if (plugin.config.isPlayersListEnabled) {
+        if (pluginInstance.config.isPlayersListEnabled) {
             players.clear()
             updateMessage()
         }

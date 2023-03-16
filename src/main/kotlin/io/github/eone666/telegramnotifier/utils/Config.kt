@@ -1,11 +1,11 @@
 package io.github.eone666.telegramnotifier.utils
 
-import io.github.eone666.telegramnotifier.TelegramNotifier
+import io.github.eone666.telegramnotifier.pluginInstance
 import org.bukkit.configuration.file.FileConfiguration
 
-class Config(private val plugin: TelegramNotifier) {
+class Config() {
 
-    private val config: FileConfiguration = plugin.getConfig()
+    private val config: FileConfiguration = pluginInstance.getConfig()
     val token: String
         get() = config.getString("token")!!
     val chatId: String
@@ -28,7 +28,7 @@ class Config(private val plugin: TelegramNotifier) {
         get() = config.getInt("playersList.messageId")
         set(id) {
             config.set("playersList.messageId", id)
-            plugin.saveConfig()
+            pluginInstance.saveConfig()
         }
     val isPlayersListHeaderEnabled: Boolean
         get() = config.getBoolean("playersList.header.enabled")

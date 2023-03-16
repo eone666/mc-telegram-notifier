@@ -1,35 +1,35 @@
 package io.github.eone666.telegramnotifier.features.notifications
 
-import io.github.eone666.telegramnotifier.TelegramNotifier
+import io.github.eone666.telegramnotifier.pluginInstance
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import org.bukkit.advancement.Advancement
 import org.bukkit.entity.Player
 
-class Notifications(private val plugin: TelegramNotifier) {
+class Notifications() {
     private fun sendMessage(message: String) {
         var text = message
-        if (plugin.config.isNotificationsPrefixEnabled) {
-            text = plugin.config.notificationsPrefixText + message
+        if (pluginInstance.config.isNotificationsPrefixEnabled) {
+            text = pluginInstance.config.notificationsPrefixText + message
         }
-        plugin.tg.sendMessage(plugin.config.chatId, text,false, null)
+        pluginInstance.tg.sendMessage(pluginInstance.config.chatId, text,false, null)
     }
 
     fun send(type: NotificationTypes, player: Player){
         when (type) {
             NotificationTypes.JOIN -> {
-                if (plugin.config.isNotificationsPlayerJoinEnabled) {
+                if (pluginInstance.config.isNotificationsPlayerJoinEnabled) {
                     sendMessage(String.format("%s has join the game", player.name))
                 }
             }
             NotificationTypes.QUIT -> {
-                if (plugin.config.isNotificationsPlayerQuitEnabled) {
+                if (pluginInstance.config.isNotificationsPlayerQuitEnabled) {
                     sendMessage(String.format("%s has left the game", player.name))
                 }
             }
         }
     }
     fun sendAdvancement(player: Player, advancement: Advancement){
-        if (plugin.config.isNotificationsPlayerAdvancementEnabled) {
+        if (pluginInstance.config.isNotificationsPlayerAdvancementEnabled) {
             val playerName = player.name
             val advancementName: String = PlainTextComponentSerializer.plainText().serialize(advancement.displayName())
             sendMessage("Player $playerName got advancement $advancementName")
