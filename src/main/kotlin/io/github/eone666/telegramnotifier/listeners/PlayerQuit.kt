@@ -1,4 +1,4 @@
-package io.github.eone666.telegramnotifier.events
+package io.github.eone666.telegramnotifier.listeners
 
 import io.github.eone666.telegramnotifier.TelegramNotifier
 import io.github.eone666.telegramnotifier.features.notifications.NotificationTypes

@@ -1,7 +1,7 @@
 package io.github.eone666.telegramnotifier
 
-import io.github.eone666.telegramnotifier.events.PlayerJoin
-import io.github.eone666.telegramnotifier.events.PlayerQuit
+import io.github.eone666.telegramnotifier.listeners.PlayerJoin
+import io.github.eone666.telegramnotifier.listeners.PlayerQuit
 import io.github.eone666.telegramnotifier.features.notifications.Notifications
 import io.github.eone666.telegramnotifier.features.PlayersList
 import io.github.eone666.telegramnotifier.utils.Config
