@@ -21,7 +21,7 @@ class TelegramNotifier : JavaPlugin() {
         config = Config()
         saveDefaultConfig()
 
-        tg = Telegram(config.token)
+        tg = Telegram(config.token, config.chatId, config.isNotificationsSendSilently)
         notifications = Notifications()
         playersList = PlayersList()
         //init features

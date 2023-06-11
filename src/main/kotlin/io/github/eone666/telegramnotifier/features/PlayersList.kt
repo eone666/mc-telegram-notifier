@@ -27,21 +27,20 @@ class PlayersList() {
     }
 
     private fun sendNewMessageAndPin() {
-        val response = pluginInstance.tg.sendMessage(pluginInstance.config.chatId, text,false, ParseMode.MARKDOWN)
+        val response = pluginInstance.tg.sendMessage(text,false, ParseMode.MARKDOWN)
         if(response != null){
             val isOk = response["ok"].toString().toBooleanStrict()
             if (isOk) {
                 val resultObject = response["result"] as JSONObject
                 val messageId = resultObject["message_id"].toString().toInt()
                 pluginInstance.config.playersListMessageId = messageId
-                pluginInstance.tg.pinChatMessage(pluginInstance.config.chatId, messageId)
+                pluginInstance.tg.pinChatMessage(messageId)
             }
         }
     }
 
     private fun editMessage() {
         val response = pluginInstance.tg.editMessageText(
-            pluginInstance.config.chatId,
             pluginInstance.config.playersListMessageId,
             text,
             false,
