@@ -11,7 +11,7 @@ class Notifications() {
         if (pluginInstance.config.isNotificationsPrefixEnabled) {
             text = pluginInstance.config.notificationsPrefixText + message
         }
-        pluginInstance.tg.sendMessage(pluginInstance.config.chatId, text,false, null)
+        pluginInstance.tg.sendMessage(text,false, null)
     }
 
     fun send(type: NotificationTypes, player: Player){

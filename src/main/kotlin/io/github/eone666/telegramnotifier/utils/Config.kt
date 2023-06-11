@@ -18,6 +18,8 @@ class Config() {
         get() = config.getBoolean("notifications.prefix.enabled")
     val notificationsPrefixText: String
         get() = config.getString("notifications.prefix.text")!!
+    val isNotificationsSendSilently: Boolean
+        get() = config.getBoolean("notifications.sendSilently")
     val isPlayersListEnabled: Boolean
         get() = config.getBoolean("playersList.enabled")
 
