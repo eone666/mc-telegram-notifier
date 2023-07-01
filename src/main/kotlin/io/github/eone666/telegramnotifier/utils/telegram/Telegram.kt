@@ -9,6 +9,13 @@ import kotlin.toString
 
 class Telegram(token: String) {
 
+    companion object {
+        private fun baseRequestOptions(chatId: String, sendSilently: Boolean) = mutableMapOf(
+                "chat_id" to chatId,
+                "disable_notification" to "$sendSilently"
+        )
+    }
+
     private val request: Request = Request(String.format("https://api.telegram.org/bot%s/", token))
 
     private fun handleErrors(response: JSONObject?) {
@@ -22,11 +29,6 @@ class Telegram(token: String) {
             }
         }
     }
-
-    private fun baseRequestOptions(chatId: String, sendSilently: Boolean) = mutableMapOf(
-            "chat_id" to chatId,
-            "disable_notification" to "$sendSilently"
-    )
 
     fun sendMessage(chatId: String, sendSilently: Boolean, text: String, webPreview: Boolean, parseMode: ParseMode?): JSONObject? {
         val data = baseRequestOptions(chatId, sendSilently)
