@@ -7,13 +7,9 @@ import kotlin.Int
 import kotlin.String
 import kotlin.toString
 
-class Telegram(token: String, chatId: String, sendSilently: Boolean) {
+class Telegram(token: String) {
 
     private val request: Request = Request(String.format("https://api.telegram.org/bot%s/", token))
-    private val baseOptions: Map<String, String> = mapOf(
-            "chat_id" to chatId,
-            "disable_notification" to "$sendSilently"
-    )
 
     private fun handleErrors(response: JSONObject?) {
         if(response != null){
@@ -27,8 +23,13 @@ class Telegram(token: String, chatId: String, sendSilently: Boolean) {
         }
     }
 
-    fun sendMessage(text: String, webPreview: Boolean, parseMode: ParseMode?): JSONObject? {
-        val data = baseOptions.toMutableMap()
+    private fun baseRequestOptions(chatId: String, sendSilently: Boolean) = mutableMapOf(
+            "chat_id" to chatId,
+            "disable_notification" to "$sendSilently"
+    )
+
+    fun sendMessage(chatId: String, sendSilently: Boolean, text: String, webPreview: Boolean, parseMode: ParseMode?): JSONObject? {
+        val data = baseRequestOptions(chatId, sendSilently)
         data["text"] = text
         data["disable_web_page_preview"] = (!webPreview).toString()
         if (parseMode != null) {
@@ -40,8 +41,8 @@ class Telegram(token: String, chatId: String, sendSilently: Boolean) {
         return response
     }
 
-    fun editMessageText(messageId: Int, text: String, webPreview: Boolean, parseMode: ParseMode?): JSONObject? {
-        val data = baseOptions.toMutableMap()
+    fun editMessageText(chatId: String, sendSilently: Boolean, messageId: Int, text: String, webPreview: Boolean, parseMode: ParseMode?): JSONObject? {
+        val data = baseRequestOptions(chatId, sendSilently)
         data["message_id"] = "$messageId"
         data["text"] = text
         data["disable_web_page_preview"] = (!webPreview).toString()
@@ -54,8 +55,8 @@ class Telegram(token: String, chatId: String, sendSilently: Boolean) {
         return response
     }
 
-    fun pinChatMessage(messageId: Int): JSONObject? {
-        val data = baseOptions.toMutableMap()
+    fun pinChatMessage(chatId: String, sendSilently: Boolean, messageId: Int): JSONObject? {
+        val data = baseRequestOptions(chatId, sendSilently)
         data["message_id"] = "$messageId"
 
         val response = request.postJson("pinChatMessage", data)

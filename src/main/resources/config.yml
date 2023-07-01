@@ -5,6 +5,7 @@ notifications:
   playerJoin: false
   playerQuit: false
   playerAdvancement: false
+  sendSilently: false
   prefix:
     enabled: false
     text: "[Minecraft] "
