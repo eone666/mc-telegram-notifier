@@ -1,4 +1,4 @@
-package io.github.eone666.telegramnotifier.features.notifications
+package io.github.eone666.telegramnotifier.features
 
 import io.github.eone666.telegramnotifier.pluginInstance
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
@@ -18,21 +18,19 @@ class Notifications() {
         )
     }
 
-    fun send(type: NotificationTypes, player: Player){
-        when (type) {
-            NotificationTypes.JOIN -> {
-                if (pluginInstance.config.isNotificationsPlayerJoinEnabled) {
-                    sendMessage(String.format("%s has join the game", player.name))
-                }
-            }
-            NotificationTypes.QUIT -> {
-                if (pluginInstance.config.isNotificationsPlayerQuitEnabled) {
-                    sendMessage(String.format("%s has left the game", player.name))
-                }
-            }
+    fun join(player: Player){
+        if (pluginInstance.config.isNotificationsPlayerJoinEnabled) {
+            sendMessage(String.format("%s has join the game", player.name))
         }
     }
-    fun sendAdvancement(player: Player, advancement: Advancement){
+
+    fun quit(player: Player){
+        if (pluginInstance.config.isNotificationsPlayerQuitEnabled) {
+            sendMessage(String.format("%s has left the game", player.name))
+        }
+    }
+
+    fun advancement(player: Player, advancement: Advancement){
         if (pluginInstance.config.isNotificationsPlayerAdvancementEnabled) {
             val playerName = player.name
             val advancementName: String = PlainTextComponentSerializer.plainText().serialize(advancement.displayName())

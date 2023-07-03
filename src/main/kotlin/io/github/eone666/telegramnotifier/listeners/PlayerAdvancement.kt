@@ -9,7 +9,7 @@ class PlayerAdvancement() : Listener {
     @EventHandler(ignoreCancelled = true)
     fun onPlayerAdvancementDone(event: PlayerAdvancementDoneEvent) {
         if (event.advancement.display?.doesAnnounceToChat() == true) {
-            pluginInstance.notifications.sendAdvancement(event.player, event.advancement)
+            pluginInstance.notifications.advancement(event.player, event.advancement)
         }
     }
 }
