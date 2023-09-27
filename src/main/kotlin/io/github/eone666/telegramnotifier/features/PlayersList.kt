@@ -6,29 +6,8 @@ import org.bukkit.entity.Player
 import java.util.stream.Collectors
 import com.elbekd.bot.types.ParseMode.MarkdownV2
 import com.github.shynixn.mccoroutine.bukkit.launch
+import io.github.eone666.telegramnotifier.utils.escape
 
-
-fun escape(string: String): String {
-    return string
-        .replace("_", "\\_")
-        .replace("*", "\\*")
-        .replace("[", "\\[")
-        .replace("]", "\\]")
-        .replace("(", "\\(")
-        .replace(")", "\\)")
-        .replace("~", "\\~")
-        .replace("`", "\\`")
-        .replace(">", "\\>")
-        .replace("#", "\\#")
-        .replace("+", "\\+")
-        .replace("-", "\\-")
-        .replace("=", "\\=")
-        .replace("|", "\\|")
-        .replace("{", "\\{")
-        .replace("}", "\\}")
-        .replace(".", "\\.")
-        .replace("!", "\\!")
-}
 
 class PlayersList() {
     private val players: MutableCollection<Player> = HashSet()
