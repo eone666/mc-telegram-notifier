@@ -16,12 +16,12 @@ playersList:
   messageId: 0
   header:
     enabled: false
-    # markdown supported
+    # markdown supported (parseMode = "Markdown")
     text: |
-      IP: 127.0.0.1:25565
+      IP: `127.0.0.1:25565`
       Website: [https://example.org](https://example.org)
   footer:
     enabled: false
-    # markdown supported
+    # markdown supported (parseMode = "Markdown")
     text: |
       Author: [Example](https://link.to/personal-page)
