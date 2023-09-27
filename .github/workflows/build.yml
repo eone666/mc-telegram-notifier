@@ -1,0 +1,43 @@
+name: Build
+
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    # Only run on PRs if the source branch is on someone else's repo
+    if: ${{ github.event_name != 'pull_request' || github.repository != github.event.pull_request.head.repo.full_name }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ 17 ]
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup JDK ${{ matrix.java }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'temurin'
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+      - name: Build
+        run: |
+         ./gradlew build
+          git config core.abbrev 9
+          git fetch --unshallow || true
+          git fetch --tags
+          git_hash=$(git describe --match "*.*" --tags)
+          echo "git_hash=$git_hash" >> $GITHUB_ENV
+          echo "snapshotVersion=preview" >> $GITHUB_ENV
+          echo "artifactPath=$(pwd)/build/libs" >> $GITHUB_ENV
+      - name: Upload dev version
+        uses: actions/upload-artifact@v3
+        with:
+          name: Plugin-${{ env.snapshotVersion }}-${{ env.git_hash }}.jar
+          path: ${{ env.artifactPath }}/TelegramNotifier-preview.jar
