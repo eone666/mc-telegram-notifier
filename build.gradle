@@ -37,7 +37,7 @@ tasks.jar { enabled = false }
 artifacts.archives(tasks.shadowJar)
 
 tasks.shadowJar {
-    archiveFileName.set("${rootProject.name}.jar")
+    archiveFileName.set("${rootProject.name}-${version}.jar")
     manifest {
         attributes["Main-Class"] = "io.github.eone666.telegramnotifier.TelegramNotifier"
     }
