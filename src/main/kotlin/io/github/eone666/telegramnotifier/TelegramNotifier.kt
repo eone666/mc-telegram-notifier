@@ -7,6 +7,7 @@ import io.github.eone666.telegramnotifier.features.PlayersList
 import io.github.eone666.telegramnotifier.utils.Config
 import org.bukkit.plugin.java.JavaPlugin
 import com.elbekd.bot.Bot
+import com.github.shynixn.mccoroutine.bukkit.registerSuspendingEvents
 
 class TelegramNotifier : JavaPlugin() {
     lateinit var config: Config
@@ -30,8 +31,8 @@ class TelegramNotifier : JavaPlugin() {
         playersList.init()
 
         //register events
-        server.pluginManager.registerEvents(PlayerJoin(), this)
-        server.pluginManager.registerEvents(PlayerQuit(), this)
+        server.pluginManager.registerSuspendingEvents(PlayerJoin(), this)
+        server.pluginManager.registerSuspendingEvents(PlayerQuit(), this)
 
         logger.info("Started successfully")
     }
