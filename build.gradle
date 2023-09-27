@@ -25,12 +25,14 @@ repositories {
 
 dependencies {
     compileOnly "io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT"
-    compileOnly "org.jetbrains.kotlin:kotlin-stdlib:1.8.10"
 
     implementation "com.github.elbekD:kt-telegram-bot:2.2.0"
-    implementation "com.github.shynixn.mccoroutine:mccoroutine-bukkit-api:2.13.0"
-    implementation "com.github.shynixn.mccoroutine:mccoroutine-bukkit-core:2.13.0"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
+
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib:1.8.10" // plugin.yml
+    compileOnly "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3" // plugin.yml
+
+    compileOnly "com.github.shynixn.mccoroutine:mccoroutine-bukkit-api:2.13.0" // plugin.yml
+    compileOnly "com.github.shynixn.mccoroutine:mccoroutine-bukkit-core:2.13.0" // plugin.yml
 }
 
 tasks.jar { enabled = false }
@@ -47,6 +49,7 @@ tasks.shadowJar {
     exclude("org/slf4j/**")
     exclude("org/eclipse/**")
     exclude("kotlin/**")
+    exclude("kotlinx/coroutines/**")
 
     exclude("DebugProbesKt.bin")
     exclude("jetty-dir.css")
