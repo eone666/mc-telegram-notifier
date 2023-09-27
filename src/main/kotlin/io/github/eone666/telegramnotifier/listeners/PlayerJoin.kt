@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerJoinEvent
 
 class PlayerJoin() : Listener {
     @EventHandler
-    fun onPlayerJoin(event: PlayerJoinEvent) {
+    suspend fun onPlayerJoin(event: PlayerJoinEvent) {
         pluginInstance.notifications.join(event.player)
         pluginInstance.playersList.add(event.player)
     }

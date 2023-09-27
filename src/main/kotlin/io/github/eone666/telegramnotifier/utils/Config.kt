@@ -23,11 +23,8 @@ class Config() {
     val isPlayersListEnabled: Boolean
         get() = config.getBoolean("playersList.enabled")
 
-    val isNotificationsPlayerAdvancementEnabled: Boolean
-        get() = config.getBoolean("notifications.playerAdvancement")
-
-    var playersListMessageId: Int
-        get() = config.getInt("playersList.messageId")
+    var playersListMessageId: Long
+        get() = config.getLong("playersList.messageId")
         set(id) {
             config.set("playersList.messageId", id)
             pluginInstance.saveConfig()
