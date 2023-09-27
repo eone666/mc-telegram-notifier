@@ -1,12 +1,12 @@
 package io.github.eone666.telegramnotifier.features
 
+import com.elbekd.bot.model.toChatId
 import io.github.eone666.telegramnotifier.pluginInstance
-import io.github.eone666.telegramnotifier.utils.telegram.ParseMode
-import org.bukkit.Bukkit
 import org.bukkit.entity.Player
-import org.json.simple.JSONObject
 import java.util.stream.Collectors
-import kotlin.toString
+import com.elbekd.bot.types.ParseMode.MarkdownV2
+import com.github.shynixn.mccoroutine.bukkit.launch
+
 
 class PlayersList() {
     private val players: MutableCollection<Player> = HashSet()
@@ -26,66 +26,48 @@ class PlayersList() {
         }
     }
 
-    private fun sendNewMessageAndPin() {
+    private suspend fun sendNewMessageAndPin() {
         val response = pluginInstance.tg.sendMessage(
-                pluginInstance.config.chatId,
-                pluginInstance.config.isNotificationsSendSilently,
-                text, false, ParseMode.MARKDOWN
+            chatId = pluginInstance.config.chatId.toChatId(),
+            disableNotification = pluginInstance.config.isNotificationsSendSilently,
+            text = text, parseMode = MarkdownV2, disableWebPagePreview = true
         )
-        if(response != null){
-            val isOk = response["ok"].toString().toBooleanStrict()
-            if (isOk) {
-                val resultObject = response["result"] as JSONObject
-                val messageId = resultObject["message_id"].toString().toInt()
-                pluginInstance.config.playersListMessageId = messageId
-                pluginInstance.tg.pinChatMessage(
-                        pluginInstance.config.chatId,
-                        pluginInstance.config.isNotificationsSendSilently,
-                        messageId
-                )
-            }
-        }
+        val messageId = response.messageId
+        pluginInstance.config.playersListMessageId = messageId
+        pluginInstance.tg.pinChatMessage(
+            chatId = pluginInstance.config.chatId.toChatId(),
+            disableNotification = pluginInstance.config.isNotificationsSendSilently,
+            messageId = messageId
+        )
     }
 
-    private fun editMessage() {
-        val response = pluginInstance.tg.editMessageText(
-                pluginInstance.config.chatId,
-                pluginInstance.config.isNotificationsSendSilently,
-                pluginInstance.config.playersListMessageId,
-                text,
-                false,
-                ParseMode.MARKDOWN
+    private suspend fun editMessage() {
+        pluginInstance.tg.editMessageText(
+                chatId = pluginInstance.config.chatId.toChatId(),
+                messageId = pluginInstance.config.playersListMessageId,
+                text = text,
+                disableWebPagePreview = true,
+                parseMode = MarkdownV2
         )
-        if(response != null){
-            val isOk = response["ok"].toString().toBooleanStrict()
-            if (!isOk) {
-                val errorCode = response["error_code"].toString().toInt()
-                val description = response["description"].toString()
-                if (errorCode == 400 && description == "Bad Request: message to edit not found") {
-                    Bukkit.getLogger().info("Sending new message")
-                    sendNewMessageAndPin()
-                }
-            }
-        }
     }
 
-    private fun updateMessage() {
+    private suspend fun updateMessage() {
         buildText()
-        if (pluginInstance.config.playersListMessageId == 0) {
+        if (pluginInstance.config.playersListMessageId == 0.toLong()) {
             sendNewMessageAndPin()
         } else {
             editMessage()
         }
     }
 
-    fun add(player: Player) {
+    suspend fun add(player: Player) {
         if (pluginInstance.config.isPlayersListEnabled) {
             players.add(player)
             updateMessage()
         }
     }
 
-    fun remove(player: Player) {
+    suspend fun remove(player: Player) {
         if (pluginInstance.config.isPlayersListEnabled) {
             players.remove(player)
             updateMessage()
@@ -94,14 +76,18 @@ class PlayersList() {
 
     fun init() {
         if (pluginInstance.config.isPlayersListEnabled) {
-            updateMessage()
+            pluginInstance.launch {
+                updateMessage()
+            }
         }
     }
 
     fun clear() {
         if (pluginInstance.config.isPlayersListEnabled) {
             players.clear()
-            updateMessage()
+            pluginInstance.launch {
+                updateMessage()
+            }
         }
     }
 }
