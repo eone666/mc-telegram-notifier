@@ -11,12 +11,17 @@ class Notifications() {
         if (pluginInstance.config.isNotificationsPrefixEnabled) {
             text = pluginInstance.config.notificationsPrefixText + message
         }
-        pluginInstance.tg.sendMessage(
+        try {
+            pluginInstance.tg.sendMessage(
                 chatId = pluginInstance.config.chatId.toChatId(),
                 text = text,
                 disableNotification = pluginInstance.config.isNotificationsSendSilently,
                 disableWebPagePreview = true
-        )
+            )
+        } catch (err: Throwable) {
+            pluginInstance.logger.warning(err.message)
+        }
+
     }
 
     fun join(player: Player){

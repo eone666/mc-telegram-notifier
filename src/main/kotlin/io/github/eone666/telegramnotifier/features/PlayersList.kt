@@ -6,7 +6,6 @@ import org.bukkit.entity.Player
 import java.util.stream.Collectors
 import com.elbekd.bot.types.ParseMode.Markdown
 import com.github.shynixn.mccoroutine.bukkit.launch
-//import io.github.eone666.telegramnotifier.utils.escape
 
 class PlayersList() {
     private val players: MutableCollection<Player> = HashSet()
@@ -27,31 +26,46 @@ class PlayersList() {
     }
 
     private suspend fun sendNewMessageAndPin() {
-        val response = pluginInstance.tg.sendMessage(
-            chatId = pluginInstance.config.chatId.toChatId(),
-            disableNotification = pluginInstance.config.isNotificationsSendSilently,
-            text = text,
-            parseMode = Markdown,
-            disableWebPagePreview = true
-        )
-        val messageId = response.messageId
-        pluginInstance.config.playersListMessageId = messageId
-        pluginInstance.tg.pinChatMessage(
-            chatId = pluginInstance.config.chatId.toChatId(),
-            disableNotification = pluginInstance.config.isNotificationsSendSilently,
-            messageId = messageId
-        )
+        try {
+            val response = pluginInstance.tg.sendMessage(
+                chatId = pluginInstance.config.chatId.toChatId(),
+                disableNotification = pluginInstance.config.isNotificationsSendSilently,
+                text = text,
+                parseMode = Markdown,
+                disableWebPagePreview = true
+            )
+            pluginInstance.config.playersListMessageId = response.messageId
+            pluginInstance.logger.info("New message sent")
+        } catch (err: Throwable) {
+            pluginInstance.logger.warning(err.message)
+        }
+
+        try {
+            pluginInstance.tg.pinChatMessage(
+                chatId = pluginInstance.config.chatId.toChatId(),
+                disableNotification = pluginInstance.config.isNotificationsSendSilently,
+                messageId = pluginInstance.config.playersListMessageId
+            )
+            pluginInstance.logger.info("Message pinned")
+        } catch (err: Throwable) {
+            pluginInstance.logger.warning(err.message)
+        }
     }
 
     private suspend fun editMessage() {
-        pluginInstance.tg.editMessageText(
+        try {
+            pluginInstance.tg.editMessageText(
                 chatId = pluginInstance.config.chatId.toChatId(),
                 messageId = pluginInstance.config.playersListMessageId,
                 text = text,
                 parseMode = Markdown,
-                disableWebPagePreview = true,
+                disableWebPagePreview = true
+            )
+        } catch (err: Throwable) {
+            pluginInstance.logger.warning(err.message)
+            sendNewMessageAndPin()
+        }
 
-        )
     }
 
     private suspend fun updateMessage() {
