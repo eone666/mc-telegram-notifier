@@ -8,6 +8,28 @@ import com.elbekd.bot.types.ParseMode.MarkdownV2
 import com.github.shynixn.mccoroutine.bukkit.launch
 
 
+fun escape(string: String): String {
+    return string
+        .replace("_", "\\_")
+        .replace("*", "\\*")
+        .replace("[", "\\[")
+        .replace("]", "\\]")
+        .replace("(", "\\(")
+        .replace(")", "\\)")
+        .replace("~", "\\~")
+        .replace("`", "\\`")
+        .replace(">", "\\>")
+        .replace("#", "\\#")
+        .replace("+", "\\+")
+        .replace("-", "\\-")
+        .replace("=", "\\=")
+        .replace("|", "\\|")
+        .replace("{", "\\{")
+        .replace("}", "\\}")
+        .replace(".", "\\.")
+        .replace("!", "\\!")
+}
+
 class PlayersList() {
     private val players: MutableCollection<Player> = HashSet()
     private var text: String = ""
@@ -30,7 +52,7 @@ class PlayersList() {
         val response = pluginInstance.tg.sendMessage(
             chatId = pluginInstance.config.chatId.toChatId(),
             disableNotification = pluginInstance.config.isNotificationsSendSilently,
-            text = text, parseMode = MarkdownV2, disableWebPagePreview = true
+            text = escape(text), parseMode = MarkdownV2, disableWebPagePreview = true
         )
         val messageId = response.messageId
         pluginInstance.config.playersListMessageId = messageId
@@ -45,7 +67,7 @@ class PlayersList() {
         pluginInstance.tg.editMessageText(
                 chatId = pluginInstance.config.chatId.toChatId(),
                 messageId = pluginInstance.config.playersListMessageId,
-                text = text,
+                text = escape(text),
                 disableWebPagePreview = true,
                 parseMode = MarkdownV2
         )
