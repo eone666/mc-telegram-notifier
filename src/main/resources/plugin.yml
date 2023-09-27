@@ -1,9 +1,9 @@
 name: TelegramNotifier
 version: '${version}'
 main: io.github.eone666.telegramnotifier.TelegramNotifier
-api-version: 1.20
+api-version: "1.20"
 libraries:
   - "org.jetbrains.kotlin:kotlin-stdlib:1.8.10"
+  - "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
   - "com.github.shynixn.mccoroutine:mccoroutine-bukkit-api:2.13.0"
   - "com.github.shynixn.mccoroutine:mccoroutine-bukkit-core:2.13.0"
-  - "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
