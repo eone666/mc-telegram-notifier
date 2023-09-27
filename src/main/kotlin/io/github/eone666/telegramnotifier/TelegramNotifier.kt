@@ -1,10 +1,11 @@
 package io.github.eone666.telegramnotifier
 
-import io.github.eone666.telegramnotifier.listeners.PlayerJoin
-import io.github.eone666.telegramnotifier.listeners.PlayerQuit
+import com.elbekd.bot.Bot
 import io.github.eone666.telegramnotifier.features.Notifications
 import io.github.eone666.telegramnotifier.features.PlayersList
 import io.github.eone666.telegramnotifier.listeners.PlayerAdvancement
+import io.github.eone666.telegramnotifier.listeners.PlayerJoin
+import io.github.eone666.telegramnotifier.listeners.PlayerQuit
 import io.github.eone666.telegramnotifier.utils.Config
 import io.github.eone666.telegramnotifier.utils.telegram.Telegram
 import org.bukkit.plugin.java.JavaPlugin
@@ -17,6 +18,8 @@ class TelegramNotifier : JavaPlugin() {
 
     override fun onEnable() {
         instance = this
+
+        val bot = Bot.createPolling("<TOKEN>") // UNUSED
 
         config = Config()
         saveDefaultConfig()

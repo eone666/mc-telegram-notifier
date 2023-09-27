@@ -1,6 +1,9 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     id 'java'
     id 'org.jetbrains.kotlin.jvm' version '1.8.10'
+    id "com.github.johnrengelman.shadow" version "7.1.1"
 }
 
 group = 'io.github.eone666'
@@ -16,12 +19,41 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
+    maven {
+        name = "jitpack"
+        url = "https://jitpack.io"
+    }
 }
 
 dependencies {
     compileOnly "io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.10" // libraries: entry in plugin.yml should be same
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib:1.8.10" // libraries: entry in plugin.yml should be same
+
+    implementation "com.github.elbekD:kt-telegram-bot:2.2.0"
 }
+
+tasks.jar { enabled = false }
+artifacts.archives(tasks.shadowJar)
+
+tasks.shadowJar {
+    archiveFileName.set("${rootProject.name}.jar")
+    manifest {
+        attributes["Main-Class"] = "io.github.eone666.telegramnotifier.TelegramNotifier"
+    }
+
+    exclude("org/intellij/**")
+    exclude("org/jetbrains/**")
+    exclude("org/slf4j/**")
+    exclude("org/eclipse/**")
+    exclude("kotlin/**")
+
+    exclude("DebugProbesKt.bin")
+    exclude("jetty-dir.css")
+    exclude("META-INF/**")
+
+    minimize()
+}
+
 
 def targetJavaVersion = 17
 java {
