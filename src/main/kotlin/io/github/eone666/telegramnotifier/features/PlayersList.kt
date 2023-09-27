@@ -4,8 +4,9 @@ import com.elbekd.bot.model.toChatId
 import io.github.eone666.telegramnotifier.pluginInstance
 import org.bukkit.entity.Player
 import java.util.stream.Collectors
-import com.elbekd.bot.types.ParseMode.MarkdownV2
+import com.elbekd.bot.types.ParseMode.Markdown
 import com.github.shynixn.mccoroutine.bukkit.launch
+//import io.github.eone666.telegramnotifier.utils.escape
 
 class PlayersList() {
     private val players: MutableCollection<Player> = HashSet()
@@ -29,7 +30,9 @@ class PlayersList() {
         val response = pluginInstance.tg.sendMessage(
             chatId = pluginInstance.config.chatId.toChatId(),
             disableNotification = pluginInstance.config.isNotificationsSendSilently,
-            text = text, parseMode = MarkdownV2, disableWebPagePreview = true
+            text = text,
+            parseMode = Markdown,
+            disableWebPagePreview = true
         )
         val messageId = response.messageId
         pluginInstance.config.playersListMessageId = messageId
@@ -45,8 +48,9 @@ class PlayersList() {
                 chatId = pluginInstance.config.chatId.toChatId(),
                 messageId = pluginInstance.config.playersListMessageId,
                 text = text,
+                parseMode = Markdown,
                 disableWebPagePreview = true,
-                parseMode = MarkdownV2
+
         )
     }
 
