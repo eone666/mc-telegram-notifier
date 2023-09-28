@@ -63,7 +63,6 @@ class PlayersList() {
             )
         } catch (err: Throwable) {
             pluginInstance.logger.warning(err.message)
-            sendNewMessageAndPin()
         }
 
     }
