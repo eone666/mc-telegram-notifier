@@ -1,5 +1,5 @@
-token: "123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11"
-chatId: "0000000000000"
+token: '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11'
+chatId: '0000000000000'
 # sending notifications as new message
 notifications:
   playerJoin: false
