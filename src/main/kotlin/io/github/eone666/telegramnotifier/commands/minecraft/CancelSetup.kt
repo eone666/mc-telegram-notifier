@@ -7,20 +7,18 @@ import org.bukkit.command.CommandSender
 
 
 class CancelSetup : CommandExecutor {
-    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
-
+    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if(pluginInstance.config.isPluginConfigured){
             sender.sendMessage("Plugin is already configured")
             return true
         }
 
-        if(pluginInstance.tg == null){
+        if(pluginInstance.bot == null){
             sender.sendMessage("Setup is not running")
             return true
         }
 
-        pluginInstance.killBot()
-        pluginInstance.setup.clearAll()
+        pluginInstance.bot!!.stop()
         sender.sendMessage("Setup is cancelled")
 
         return true

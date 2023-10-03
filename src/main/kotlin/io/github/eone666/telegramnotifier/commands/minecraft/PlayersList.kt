@@ -7,21 +7,20 @@ import org.bukkit.command.CommandSender
 
 
 class PlayersList : CommandExecutor {
-    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
+    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
 
-        if(args?.get(0) !== null){
+        if (args.isNotEmpty()) {
             val value: Boolean
             try {
-                value = args[0].toBooleanStrict()
-            } catch (_:Throwable) {
+                value = args.first().toBooleanStrict()
+            } catch (_:IllegalArgumentException) {
                 sender.sendMessage("Argument should be true or false")
                 return false
             }
 
             pluginInstance.config.isPlayersListEnabled = value
-            pluginInstance.config.save()
-
             pluginInstance.playersList.init()
+            pluginInstance.config.save()
 
             sender.sendMessage("Players list ${if(value) "enabled" else "disabled"}")
             return true
