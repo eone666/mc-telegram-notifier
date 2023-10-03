@@ -27,21 +27,22 @@ class PlayersList() {
 
     private suspend fun sendNewMessageAndPin() {
         try {
-            val response = pluginInstance.tg.sendMessage(
+            val response = pluginInstance.tg?.sendMessage(
                 chatId = pluginInstance.config.chatId.toChatId(),
                 disableNotification = pluginInstance.config.isNotificationsSendSilently,
                 text = text,
                 parseMode = Markdown,
                 disableWebPagePreview = true
             )
-            pluginInstance.config.playersListMessageId = response.messageId
+            pluginInstance.config.playersListMessageId =  response!!.messageId
+            pluginInstance.config.save()
             pluginInstance.logger.info("New message sent")
         } catch (err: Throwable) {
             pluginInstance.logger.warning(err.message)
         }
 
         try {
-            pluginInstance.tg.pinChatMessage(
+            pluginInstance.tg?.pinChatMessage(
                 chatId = pluginInstance.config.chatId.toChatId(),
                 disableNotification = pluginInstance.config.isNotificationsSendSilently,
                 messageId = pluginInstance.config.playersListMessageId
@@ -54,7 +55,7 @@ class PlayersList() {
 
     private suspend fun editMessage() {
         try {
-            pluginInstance.tg.editMessageText(
+            pluginInstance.tg?.editMessageText(
                 chatId = pluginInstance.config.chatId.toChatId(),
                 messageId = pluginInstance.config.playersListMessageId,
                 text = text,
