@@ -10,7 +10,7 @@ class SendSilently : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
 
         if(args?.get(0) !== null){
-            val value: Boolean;
+            val value: Boolean
             try {
                 value = args[0].toBooleanStrict()
             } catch (_:Throwable) {
@@ -22,7 +22,7 @@ class SendSilently : CommandExecutor {
             pluginInstance.config.save()
 
             sender.sendMessage("Silent mode ${if(value) "enabled" else "disabled"}")
-            return true;
+            return true
         }
 
         return false

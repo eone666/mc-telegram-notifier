@@ -19,7 +19,7 @@ class Setup : CommandExecutor {
             pluginInstance.initBot(token)
             pluginInstance.setup.startSetup(token, sender)
             sender.sendMessage("Enter the \"/setup ${pluginInstance.setup.getCode()}\" command in the telegram bot")
-            return true;
+            return true
         }
 
         return false
