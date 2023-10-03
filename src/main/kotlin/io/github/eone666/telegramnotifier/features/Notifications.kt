@@ -12,8 +12,8 @@ class Notifications() {
             text = pluginInstance.config.notificationsPrefixText + message
         }
         try {
-            pluginInstance.tg?.sendMessage(
-                chatId = pluginInstance.config.chatId.toChatId(),
+            pluginInstance.bot?.tg?.sendMessage(
+                chatId = pluginInstance.config.chatId!!.toChatId(),
                 text = text,
                 disableNotification = pluginInstance.config.isNotificationsSendSilently,
                 disableWebPagePreview = true

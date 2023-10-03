@@ -6,12 +6,11 @@ import io.github.eone666.telegramnotifier.features.Notifications
 import io.github.eone666.telegramnotifier.features.PlayersList
 import io.github.eone666.telegramnotifier.utils.Config
 import org.bukkit.plugin.java.JavaPlugin
-import com.elbekd.bot.Bot
 import com.github.shynixn.mccoroutine.bukkit.registerSuspendingEvents
 import io.github.eone666.telegramnotifier.commands.minecraft.CancelSetup
 import io.github.eone666.telegramnotifier.commands.minecraft.Setup as SetupCommandMinecraft
-import io.github.eone666.telegramnotifier.commands.telegram.Setup as SetupCommandTelegram
-import io.github.eone666.telegramnotifier.features.Setup
+import io.github.eone666.telegramnotifier.features.OneTimePasswordForSender
+import io.github.eone666.telegramnotifier.telegram.Bot
 import io.github.eone666.telegramnotifier.commands.minecraft.PlayerJoin as PlayerJoinCommand
 import io.github.eone666.telegramnotifier.commands.minecraft.PlayerQuit as PlayerQuitCommand
 import io.github.eone666.telegramnotifier.commands.minecraft.PlayersList as PlayersListCommand
@@ -19,23 +18,10 @@ import io.github.eone666.telegramnotifier.commands.minecraft.SendSilently as Sen
 
 class TelegramNotifier : JavaPlugin() {
     lateinit var config: Config
-    var tg: Bot? = null
-    lateinit var setup: Setup
+    var bot: Bot? = null
+    lateinit var oneTimePasswordForSender: OneTimePasswordForSender
     lateinit var notifications: Notifications
     lateinit var playersList: PlayersList
-
-    fun initBot(token: String){
-        tg = Bot.createPolling(token = token)
-        tg!!.start()
-
-        //register telegram commands
-        SetupCommandTelegram().init()
-    }
-
-    fun killBot() {
-        tg?.stop()
-        tg = null
-    }
 
     fun initFeatures() {
         notifications = Notifications()
@@ -50,12 +36,9 @@ class TelegramNotifier : JavaPlugin() {
 
         config = Config()
 
-        config.init()
-
-        setup = Setup()
-
-        if(config.isPluginConfigured){
-            initBot(config.token)
+        if (config.isPluginConfigured) {
+            logger.info("Plugin configured, starting bot...");
+            bot = Bot(config.token!!)
             initFeatures()
         }
 
@@ -76,10 +59,9 @@ class TelegramNotifier : JavaPlugin() {
 
     override fun onDisable() {
         logger.info("Shutting down...")
+        bot?.stop()
 
-        killBot()
-
-        //disable features
+        // disable features
         playersList.clear()
     }
 
