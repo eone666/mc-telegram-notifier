@@ -7,3 +7,41 @@ libraries:
   - "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
   - "com.github.shynixn.mccoroutine:mccoroutine-bukkit-api:2.13.0"
   - "com.github.shynixn.mccoroutine:mccoroutine-bukkit-core:2.13.0"
+permissions:
+  "telegramnotifier.setup":
+    description: "Telegram Notifier /setup command"
+    default: op
+  "telegramnotifier.config":
+    description: "Telegram Notifier configuration commands"
+    default: op
+  "telegramnotifier.*":
+    description: "All Telegram Notifier Commands"
+    default: op
+    children:
+      "telegramnotifier.setup": true
+      "telegramnotifier.config": true
+commands:
+  setup:
+    description: "Setup Telegram Notifier"
+    usage: "Usage: /setup <token>"
+    permission: "telegramnotifier.setup"
+  cancelsetup:
+    description: "Cancel Telegram Notifier setup"
+    usage: "Usage: /cancelsetup"
+    permission: "telegramnotifier.setup"
+  playerjoin:
+    description: "Enable/disable player join notifications"
+    usage: "Usage: /playerjoin <true|false>"
+    permission: "telegramnotifier.config"
+  playerquit:
+    description: "Enable/disable player quit notifications"
+    usage: "Usage: /playerquit <true|false>"
+    permission: "telegramnotifier.config"
+  playerslist:
+    description: "Enable/disable players list"
+    usage: "Usage: /playerslist <true|false>"
+    permission: "telegramnotifier.config"
+  sendsilently:
+    description: "Enable/disable silent mode"
+    usage: "Usage: /sendsilently <true|false>"
+    permission: "telegramnotifier.config"

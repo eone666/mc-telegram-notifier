@@ -3,37 +3,73 @@ package io.github.eone666.telegramnotifier.utils
 import io.github.eone666.telegramnotifier.pluginInstance
 import org.bukkit.configuration.file.FileConfiguration
 
-class Config() {
+class Config {
+
+    fun init () {
+        pluginInstance.saveDefaultConfig()
+    }
+
+    fun save () {
+        pluginInstance.saveConfig()
+    }
 
     private val config: FileConfiguration = pluginInstance.getConfig()
-    val token: String
+
+    var isPluginConfigured: Boolean
+        get() = config.getBoolean("configured")
+        set(value) {
+            config.set("configured",value)
+        }
+    var token: String
         get() = config.getString("token")!!
-    val chatId: String
+        set (token) {
+            config.set("token", token)
+        }
+    var chatId: String
         get() = config.getString("chatId")!!
-    val isNotificationsPlayerJoinEnabled: Boolean
+        set (id) {
+            config.set("chatId", id)
+        }
+    var isNotificationsPlayerJoinEnabled: Boolean
         get() = config.getBoolean("notifications.playerJoin")
-    val isNotificationsPlayerQuitEnabled: Boolean
+        set(value) {
+            config.set("notifications.playerJoin", value)
+        }
+    var isNotificationsPlayerQuitEnabled: Boolean
         get() = config.getBoolean("notifications.playerQuit")
-    val isNotificationsPrefixEnabled: Boolean
+        set(value) {
+            config.set("notifications.playerQuit", value)
+        }
+    var isNotificationsPrefixEnabled: Boolean
         get() = config.getBoolean("notifications.prefix.enabled")
-    val notificationsPrefixText: String
+        set(value) {
+            config.set("notifications.prefix.enabled", value)
+        }
+    var notificationsPrefixText: String
         get() = config.getString("notifications.prefix.text")!!
-    val isNotificationsSendSilently: Boolean
+        set(text) {
+            config.set("notifications.prefix.text", text)
+        }
+    var isNotificationsSendSilently: Boolean
         get() = config.getBoolean("notifications.sendSilently")
-    val isPlayersListEnabled: Boolean
+        set(value) {
+            config.set("notifications.sendSilently", value)
+        }
+    var isPlayersListEnabled: Boolean
         get() = config.getBoolean("playersList.enabled")
+        set(value) {
+            config.set("playersList.enabled", value)
+        }
 
     var playersListMessageId: Long
         get() = config.getLong("playersList.messageId")
         set(id) {
             config.set("playersList.messageId", id)
-            pluginInstance.saveConfig()
         }
     val isPlayersListHeaderEnabled: Boolean
         get() = config.getBoolean("playersList.header.enabled")
     val playersListHeaderText: String
         get() = config.getString("playersList.header.text")!!
-
     val isPlayersListFooterEnabled: Boolean
         get() = config.getBoolean("playersList.footer.enabled")
     val playersListFooterText: String
