@@ -27,7 +27,6 @@ class Config : TabExecutor {
 
     private fun set(key: String, value: Any?, sender: CommandSender){
         config.set(key,value)
-        config.save()
         sender.sendMessage("Property $key set to $value")
     }
 
