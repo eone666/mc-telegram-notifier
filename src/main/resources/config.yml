@@ -5,7 +5,7 @@ configured: false
 notifications:
   playerJoin: false
   playerQuit: false
-  sendSilently: false
+  silentMode: false
   prefix:
     enabled: false
     text: "[Minecraft] "

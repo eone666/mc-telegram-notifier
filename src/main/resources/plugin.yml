@@ -29,19 +29,7 @@ commands:
     description: "Cancel Telegram Notifier setup"
     usage: "Usage: /cancelsetup"
     permission: "telegramnotifier.setup"
-  playerjoin:
-    description: "Enable/disable player join notifications"
-    usage: "Usage: /playerjoin <true|false>"
-    permission: "telegramnotifier.config"
-  playerquit:
-    description: "Enable/disable player quit notifications"
-    usage: "Usage: /playerquit <true|false>"
-    permission: "telegramnotifier.config"
-  playerslist:
-    description: "Enable/disable players list"
-    usage: "Usage: /playerslist <true|false>"
-    permission: "telegramnotifier.config"
-  sendsilently:
-    description: "Enable/disable silent mode"
-    usage: "Usage: /sendsilently <true|false>"
+  config:
+    description: "Configure Telegram Notifier"
+    usage: "Usage: /config <key> <value>"
     permission: "telegramnotifier.config"

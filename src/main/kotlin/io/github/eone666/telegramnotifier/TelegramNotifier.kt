@@ -1,20 +1,21 @@
 package io.github.eone666.telegramnotifier
 
-import io.github.eone666.telegramnotifier.listeners.PlayerJoin
-import io.github.eone666.telegramnotifier.listeners.PlayerQuit
-import io.github.eone666.telegramnotifier.features.Notifications
-import io.github.eone666.telegramnotifier.features.PlayersList
-import io.github.eone666.telegramnotifier.utils.Config
 import org.bukkit.plugin.java.JavaPlugin
 import com.github.shynixn.mccoroutine.bukkit.registerSuspendingEvents
-import io.github.eone666.telegramnotifier.commands.minecraft.CancelSetup
-import io.github.eone666.telegramnotifier.commands.minecraft.Setup as SetupCommandMinecraft
+
+
+import io.github.eone666.telegramnotifier.listeners.PlayerJoin
+import io.github.eone666.telegramnotifier.listeners.PlayerQuit
+
+import io.github.eone666.telegramnotifier.features.Notifications
+import io.github.eone666.telegramnotifier.features.PlayersList
 import io.github.eone666.telegramnotifier.features.OneTimePasswordForSender
+
 import io.github.eone666.telegramnotifier.telegram.Bot
-import io.github.eone666.telegramnotifier.commands.minecraft.PlayerJoin as PlayerJoinCommand
-import io.github.eone666.telegramnotifier.commands.minecraft.PlayerQuit as PlayerQuitCommand
-import io.github.eone666.telegramnotifier.commands.minecraft.PlayersList as PlayersListCommand
-import io.github.eone666.telegramnotifier.commands.minecraft.SendSilently as SendSilentlyCommand
+
+import io.github.eone666.telegramnotifier.commands.Setup as SetupCommand
+import io.github.eone666.telegramnotifier.commands.CancelSetup as CancelSetupCommand
+import io.github.eone666.telegramnotifier.commands.Config as ConfigCommand
 
 class TelegramNotifier : JavaPlugin() {
     lateinit var config: Config
@@ -28,7 +29,7 @@ class TelegramNotifier : JavaPlugin() {
         playersList = PlayersList()
 
         //init features
-        playersList.init()
+        playersList.update()
     }
 
     override fun onEnable() {
@@ -36,9 +37,9 @@ class TelegramNotifier : JavaPlugin() {
 
         config = Config()
 
-        if (config.isPluginConfigured) {
-            logger.info("Plugin configured, starting bot...");
-            bot = Bot(config.token!!)
+        if (config.isPluginConfigured.boolean) {
+            logger.info("Plugin configured, starting bot...")
+            bot = Bot(config.token.string!!)
             initFeatures()
         }
 
@@ -47,12 +48,9 @@ class TelegramNotifier : JavaPlugin() {
         server.pluginManager.registerSuspendingEvents(PlayerQuit(), this)
 
         //register minecraft commands
-        getCommand("setup")?.setExecutor(SetupCommandMinecraft())
-        getCommand("cancelsetup")?.setExecutor(CancelSetup())
-        getCommand("playerjoin")?.setExecutor(PlayerJoinCommand())
-        getCommand("playerquit")?.setExecutor(PlayerQuitCommand())
-        getCommand("playerslist")?.setExecutor(PlayersListCommand())
-        getCommand("sendsilently")?.setExecutor(SendSilentlyCommand())
+        getCommand("setup")?.setExecutor(SetupCommand())
+        getCommand("cancelsetup")?.setExecutor(CancelSetupCommand())
+        getCommand("config")?.tabCompleter = ConfigCommand()
 
         logger.info("Started successfully")
     }

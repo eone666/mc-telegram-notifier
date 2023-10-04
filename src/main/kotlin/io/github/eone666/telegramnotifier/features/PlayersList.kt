@@ -8,6 +8,9 @@ import com.elbekd.bot.types.ParseMode.Markdown
 import com.github.shynixn.mccoroutine.bukkit.launch
 
 class PlayersList() {
+    private val config = pluginInstance.config
+    private val tg = pluginInstance.bot?.tg
+
     private val players: MutableCollection<Player> = HashSet()
     private var text: String = ""
     private fun buildText() {
@@ -16,36 +19,36 @@ class PlayersList() {
 
         text = if (playersCount == 0) "No players online" else "Players online:\n$playerNames"
 
-        if (pluginInstance.config.isPlayersListHeaderEnabled) {
-            text = "${pluginInstance.config.playersListHeaderText}\n$text"
+        if (config.isPlayersListHeaderEnabled.boolean) {
+            text = "${config.playersListHeaderText}\n$text"
         }
 
-        if (pluginInstance.config.isPlayersListFooterEnabled) {
-            text = "$text\n\n${pluginInstance.config.playersListFooterText}"
+        if (config.isPlayersListFooterEnabled.boolean) {
+            text = "$text\n\n${config.playersListFooterText}"
         }
     }
 
     private suspend fun sendNewMessageAndPin() {
         try {
-            val response = pluginInstance.bot?.tg?.sendMessage(
-                chatId = pluginInstance.config.chatId!!.toChatId(),
-                disableNotification = pluginInstance.config.isNotificationsSendSilently,
+            val response = tg?.sendMessage(
+                chatId = config.chatId.string!!.toChatId(),
+                disableNotification = config.isNotificationsSilentModeEnabled.boolean,
                 text = text,
                 parseMode = Markdown,
                 disableWebPagePreview = true
             )
-            pluginInstance.config.playersListMessageId =  response!!.messageId
-            pluginInstance.config.save()
+            config.playersListMessageId.set(response!!.messageId)
+            config.save()
             pluginInstance.logger.info("New message sent")
         } catch (err: Throwable) {
             pluginInstance.logger.warning(err.message)
         }
 
         try {
-            pluginInstance.bot?.tg?.pinChatMessage(
-                chatId = pluginInstance.config.chatId!!.toChatId(),
-                disableNotification = pluginInstance.config.isNotificationsSendSilently,
-                messageId = pluginInstance.config.playersListMessageId
+            tg?.pinChatMessage(
+                chatId = config.chatId.string!!.toChatId(),
+                disableNotification = config.isNotificationsSilentModeEnabled.boolean,
+                messageId = config.playersListMessageId.long
             )
             pluginInstance.logger.info("Message pinned")
         } catch (err: Throwable) {
@@ -55,9 +58,9 @@ class PlayersList() {
 
     private suspend fun editMessage() {
         try {
-            pluginInstance.bot?.tg?.editMessageText(
-                chatId = pluginInstance.config.chatId!!.toChatId(),
-                messageId = pluginInstance.config.playersListMessageId,
+            tg?.editMessageText(
+                chatId = config.chatId.string!!.toChatId(),
+                messageId = config.playersListMessageId.long,
                 text = text,
                 parseMode = Markdown,
                 disableWebPagePreview = true
@@ -70,7 +73,7 @@ class PlayersList() {
 
     private suspend fun updateMessage() {
         buildText()
-        if (pluginInstance.config.playersListMessageId == 0.toLong()) {
+        if (config.playersListMessageId.long == 0.toLong()) {
             sendNewMessageAndPin()
         } else {
             editMessage()
@@ -78,21 +81,21 @@ class PlayersList() {
     }
 
     suspend fun add(player: Player) {
-        if (pluginInstance.config.isPlayersListEnabled) {
+        if (config.isPlayersListEnabled.boolean) {
             players.add(player)
             updateMessage()
         }
     }
 
     suspend fun remove(player: Player) {
-        if (pluginInstance.config.isPlayersListEnabled) {
+        if (config.isPlayersListEnabled.boolean) {
             players.remove(player)
             updateMessage()
         }
     }
 
-    fun init() {
-        if (pluginInstance.config.isPlayersListEnabled) {
+    fun update() {
+        if (config.isPlayersListEnabled.boolean) {
             pluginInstance.launch {
                 updateMessage()
             }
@@ -100,7 +103,7 @@ class PlayersList() {
     }
 
     fun clear() {
-        if (pluginInstance.config.isPlayersListEnabled) {
+        if (config.isPlayersListEnabled.boolean) {
             players.clear()
             pluginInstance.launch {
                 updateMessage()
