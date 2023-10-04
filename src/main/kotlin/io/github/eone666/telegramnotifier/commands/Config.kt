@@ -20,29 +20,49 @@ class Config : TabExecutor {
         config.isPlayersListEnabled.key,
         config.playersListMessageId.key,
         config.isPlayersListHeaderEnabled.key,
-        config.playersListHeaderText.key,
         config.isPlayersListFooterEnabled.key,
-        config.playersListFooterText.key,
     )
 
-    private fun setProperty(key: String, value: String, sender: CommandSender):Boolean {
-        when(key){
+    private fun set(key: String, value: Any?, sender: CommandSender){
+        config.set(key,value)
+        config.save()
+        sender.sendMessage("Property $key set to $value")
+    }
+
+    private fun setProperty(args: Array<out String>, sender: CommandSender):Boolean {
+        val value = args[1]
+
+        when(val key = args.first()){
             config.isNotificationsPlayerJoinEnabled.key,
             config.isNotificationsPlayerQuitEnabled.key,
             config.isNotificationsPrefixEnabled.key,
-            config.isNotificationsSilentModeEnabled.key,
-            config.isPlayersListEnabled.key,
-            config.isPlayersListHeaderEnabled.key,
-            config.isPlayersListFooterEnabled.key -> {
-                val bool: Boolean;
+            config.isNotificationsSilentModeEnabled.key -> {
+                val bool: Boolean
                 try {
                     bool = value.toBooleanStrict()
                 } catch (_:IllegalArgumentException) {
                     sender.sendMessage("Argument should be true or false")
                     return false
                 }
-                config.set(key,bool)
-                sender.sendMessage("Property $key set to $value")
+                set(key,bool,sender)
+                return true
+            }
+
+            config.isPlayersListEnabled.key,
+            config.isPlayersListHeaderEnabled.key,
+            config.isPlayersListFooterEnabled.key -> {
+                val bool: Boolean
+                try {
+                    bool = value.toBooleanStrict()
+                } catch (_:IllegalArgumentException) {
+                    sender.sendMessage("Argument should be true or false")
+                    return false
+                }
+                set(key,bool,sender)
+                if(bool){
+                    sender.sendMessage("The header and footer text for the player list can only be set in the configuration file (because it multi-line). :( ")
+                }
+                pluginInstance.playersList.update()
                 return true
             }
 
@@ -52,18 +72,17 @@ class Config : TabExecutor {
                     sender.sendMessage("Argument can only be 0")
                     return false
                 }
-                config.set(key,long)
-                sender.sendMessage("Property $key set to $value")
+                set(key,long,sender)
+                return true
+            }
+
+            config.notificationsPrefixText.key -> {
+                set(key,value,sender)
                 return true
             }
 
             else -> {
-                if(!configKeys.contains(key)){
-                    sender.sendMessage("Key is not supported")
-                } else {
-                    config.set(key, value)
-                    sender.sendMessage("Property $key set to $value")
-                }
+                sender.sendMessage("Key is not supported")
                 return true
             }
         }
@@ -79,7 +98,7 @@ class Config : TabExecutor {
             return false
         }
 
-        return setProperty(args.first(), args[1], sender)
+        return setProperty(args, sender)
     }
     override fun onTabComplete(
         sender: CommandSender,
