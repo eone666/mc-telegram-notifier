@@ -30,7 +30,16 @@ class Config : TabExecutor {
         sender.sendMessage("Property $key set to $value")
     }
 
-    private fun setProperty(args: Array<out String>, sender: CommandSender):Boolean {
+    override fun onCommand(
+        sender: CommandSender,
+        command: Command,
+        label: String,
+        args: Array<out String>
+    ): Boolean {
+        if (args.isEmpty()) {
+            return false
+        }
+
         val value = args[1]
 
         when(val key = args.first()){
@@ -96,19 +105,6 @@ class Config : TabExecutor {
                 return true
             }
         }
-    }
-
-    override fun onCommand(
-        sender: CommandSender,
-        command: Command,
-        label: String,
-        args: Array<out String>
-    ): Boolean {
-        if (args.isEmpty()) {
-            return false
-        }
-
-        return setProperty(args, sender)
     }
     override fun onTabComplete(
         sender: CommandSender,
