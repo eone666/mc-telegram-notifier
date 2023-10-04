@@ -5,10 +5,10 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerQuitEvent
 
-class PlayerQuit() : Listener {
+class PlayerQuit : Listener {
     @EventHandler
     suspend fun onPlayerQuit(event: PlayerQuitEvent) {
-        if(pluginInstance.config.isPluginConfigured.boolean){
+        if(pluginInstance.config.isPluginConfigured.get()){
             pluginInstance.notifications.quit(event.player)
             pluginInstance.playersList.remove(event.player)
         }

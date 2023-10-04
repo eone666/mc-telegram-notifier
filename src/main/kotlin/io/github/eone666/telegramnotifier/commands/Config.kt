@@ -21,6 +21,8 @@ class Config : TabExecutor {
         config.playersListMessageId.key,
         config.isPlayersListHeaderEnabled.key,
         config.isPlayersListFooterEnabled.key,
+        config.playersListHeaderText.key,
+        config.playersListFooterText.key,
     )
 
     private fun set(key: String, value: Any?, sender: CommandSender){
@@ -59,9 +61,6 @@ class Config : TabExecutor {
                     return false
                 }
                 set(key,bool,sender)
-                if(bool){
-                    sender.sendMessage("The header and footer text for the player list can only be set in the configuration file (because it multi-line). :( ")
-                }
                 pluginInstance.playersList.update()
                 return true
             }
@@ -77,8 +76,16 @@ class Config : TabExecutor {
             }
 
             config.notificationsPrefixText.key -> {
-                val string = args.drop(1).joinToString(" ")
+                val string = args.drop(1).joinToString(" ") + " "
                 set(key,string,sender)
+                return true
+            }
+
+            config.playersListHeaderText.key,
+            config.playersListFooterText.key -> {
+                val string = args.drop(1).joinToString(" ") + "\n"
+                set(key,string,sender)
+                pluginInstance.playersList.update()
                 return true
             }
 

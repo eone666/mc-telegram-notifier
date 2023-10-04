@@ -37,9 +37,9 @@ class TelegramNotifier : JavaPlugin() {
 
         config = Config()
 
-        if (config.isPluginConfigured.boolean) {
+        if (config.isPluginConfigured.get()) {
             logger.info("Plugin configured, starting bot...")
-            bot = Bot(config.token.string!!)
+            bot = Bot(config.token.get())
             initFeatures()
         }
 

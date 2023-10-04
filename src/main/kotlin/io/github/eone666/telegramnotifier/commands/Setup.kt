@@ -12,7 +12,7 @@ import io.github.eone666.telegramnotifier.features.OneTimePasswordForSender
 class Setup : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
 
-        if (pluginInstance.config.isPluginConfigured.boolean){
+        if (pluginInstance.config.isPluginConfigured.get()){
             sender.sendMessage("Plugin is already configured")
             return true
         }
