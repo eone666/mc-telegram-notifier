@@ -101,7 +101,7 @@ class Config : TabExecutor {
                 return true
             }
             else -> {
-                sender.sendMessage("Key is not accepted")
+                sender.sendMessage("Key is not supported")
                 return true
             }
         }
