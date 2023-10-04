@@ -10,7 +10,7 @@ class PlayerQuit : Listener {
     suspend fun onPlayerQuit(event: PlayerQuitEvent) {
         if(pluginInstance.config.isPluginConfigured.get()){
             pluginInstance.notifications.quit(event.player)
-            pluginInstance.playersList.remove(event.player)
+            pluginInstance.playerList.remove(event.player)
         }
     }
 }

@@ -10,7 +10,7 @@ class PlayerJoin : Listener {
     suspend fun onPlayerJoin(event: PlayerJoinEvent) {
         if(pluginInstance.config.isPluginConfigured.get()){
             pluginInstance.notifications.join(event.player)
-            pluginInstance.playersList.add(event.player)
+            pluginInstance.playerList.add(event.player)
         }
     }
 }

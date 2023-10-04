@@ -11,7 +11,7 @@ notifications:
     text: "[Minecraft] "
 # adds or removes players from an existing pinned message
 # `Group Admin Rights>Pin Messages` must be enabled in bot settings for auto-pin or pin manually
-playersList:
+playerList:
   enabled: false
   #message id must be a number (do not change manually or change it to 0 for a new message)
   messageId: 0
