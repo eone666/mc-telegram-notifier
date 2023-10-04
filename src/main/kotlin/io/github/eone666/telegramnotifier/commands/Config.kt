@@ -17,12 +17,12 @@ class Config : TabExecutor {
         config.isNotificationsPrefixEnabled.key,
         config.notificationsPrefixText.key,
         config.isNotificationsSilentModeEnabled.key,
-        config.isPlayersListEnabled.key,
-        config.playersListMessageId.key,
-        config.isPlayersListHeaderEnabled.key,
-        config.isPlayersListFooterEnabled.key,
-        config.playersListHeaderText.key,
-        config.playersListFooterText.key,
+        config.isPlayerListEnabled.key,
+        config.playerListMessageId.key,
+        config.isPlayerListHeaderEnabled.key,
+        config.isPlayerListFooterEnabled.key,
+        config.playerListHeaderText.key,
+        config.playerListFooterText.key,
     )
 
     private fun set(key: String, value: Any?, sender: CommandSender){
@@ -50,9 +50,9 @@ class Config : TabExecutor {
                 return true
             }
 
-            config.isPlayersListEnabled.key,
-            config.isPlayersListHeaderEnabled.key,
-            config.isPlayersListFooterEnabled.key -> {
+            config.isPlayerListEnabled.key,
+            config.isPlayerListHeaderEnabled.key,
+            config.isPlayerListFooterEnabled.key -> {
                 val bool: Boolean
                 try {
                     bool = value.toBooleanStrict()
@@ -61,11 +61,11 @@ class Config : TabExecutor {
                     return false
                 }
                 set(key,bool,sender)
-                pluginInstance.playersList.update()
+                pluginInstance.playerList.update()
                 return true
             }
 
-            config.playersListMessageId.key -> {
+            config.playerListMessageId.key -> {
                 val long = value.toLong()
                 if(long != 0L){
                     sender.sendMessage("Argument can only be 0")
@@ -81,11 +81,14 @@ class Config : TabExecutor {
                 return true
             }
 
-            config.playersListHeaderText.key,
-            config.playersListFooterText.key -> {
-                val string = args.drop(1).joinToString(" ") + "\n"
+            config.playerListHeaderText.key,
+            config.playerListFooterText.key -> {
+                var string = args.drop(1).joinToString(" ")
+                if(key == config.playerListHeaderText.key){
+                    string += "\n"
+                }
                 set(key,string,sender)
-                pluginInstance.playersList.update()
+                pluginInstance.playerList.update()
                 return true
             }
 
@@ -126,13 +129,13 @@ class Config : TabExecutor {
             config.isNotificationsPlayerQuitEnabled.key,
             config.isNotificationsPrefixEnabled.key,
             config.isNotificationsSilentModeEnabled.key,
-            config.isPlayersListEnabled.key,
-            config.isPlayersListHeaderEnabled.key,
-            config.isPlayersListFooterEnabled.key -> {
+            config.isPlayerListEnabled.key,
+            config.isPlayerListHeaderEnabled.key,
+            config.isPlayerListFooterEnabled.key -> {
                 listOf("true", "false")
             }
 
-            config.playersListMessageId.key -> listOf("0")
+            config.playerListMessageId.key -> listOf("0")
 
             else -> listOf()
         }

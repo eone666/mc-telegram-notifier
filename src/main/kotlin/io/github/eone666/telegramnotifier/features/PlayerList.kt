@@ -7,7 +7,7 @@ import java.util.stream.Collectors
 import com.elbekd.bot.types.ParseMode.Markdown
 import com.github.shynixn.mccoroutine.bukkit.launch
 
-class PlayersList {
+class PlayerList {
     private val config = pluginInstance.config
     private val tg = pluginInstance.bot?.tg
 
@@ -19,12 +19,12 @@ class PlayersList {
 
         text = if (playersCount == 0) "No players online" else "Players online:\n$playerNames"
 
-        if (config.isPlayersListHeaderEnabled.get()) {
-            text = "${config.playersListHeaderText.get()}\n$text"
+        if (config.isPlayerListHeaderEnabled.get()) {
+            text = "${config.playerListHeaderText.get()}\n$text"
         }
 
-        if (config.isPlayersListFooterEnabled.get()) {
-            text = "$text\n\n${config.playersListFooterText.get()}"
+        if (config.isPlayerListFooterEnabled.get()) {
+            text = "$text\n\n${config.playerListFooterText.get()}"
         }
     }
 
@@ -37,7 +37,7 @@ class PlayersList {
                 parseMode = Markdown,
                 disableWebPagePreview = true
             )
-            config.playersListMessageId.set(response!!.messageId)
+            config.playerListMessageId.set(response!!.messageId)
             config.save()
             pluginInstance.logger.info("New message sent")
         } catch (err: Throwable) {
@@ -48,7 +48,7 @@ class PlayersList {
             tg?.pinChatMessage(
                 chatId = config.chatId.get().toChatId(),
                 disableNotification = config.isNotificationsSilentModeEnabled.get(),
-                messageId = config.playersListMessageId.get()
+                messageId = config.playerListMessageId.get()
             )
             pluginInstance.logger.info("Message pinned")
         } catch (err: Throwable) {
@@ -60,7 +60,7 @@ class PlayersList {
         try {
             tg?.editMessageText(
                 chatId = config.chatId.get().toChatId(),
-                messageId = config.playersListMessageId.get(),
+                messageId = config.playerListMessageId.get(),
                 text = text,
                 parseMode = Markdown,
                 disableWebPagePreview = true
@@ -73,7 +73,7 @@ class PlayersList {
 
     private suspend fun updateMessage() {
         buildText()
-        if (config.playersListMessageId.get() == 0.toLong()) {
+        if (config.playerListMessageId.get() == 0.toLong()) {
             sendNewMessageAndPin()
         } else {
             editMessage()
@@ -81,21 +81,21 @@ class PlayersList {
     }
 
     suspend fun add(player: Player) {
-        if (config.isPlayersListEnabled.get()) {
+        if (config.isPlayerListEnabled.get()) {
             players.add(player)
             updateMessage()
         }
     }
 
     suspend fun remove(player: Player) {
-        if (config.isPlayersListEnabled.get()) {
+        if (config.isPlayerListEnabled.get()) {
             players.remove(player)
             updateMessage()
         }
     }
 
     fun update() {
-        if (config.isPlayersListEnabled.get()) {
+        if (config.isPlayerListEnabled.get()) {
             pluginInstance.launch {
                 updateMessage()
             }
@@ -103,7 +103,7 @@ class PlayersList {
     }
 
     fun clear() {
-        if (config.isPlayersListEnabled.get()) {
+        if (config.isPlayerListEnabled.get()) {
             players.clear()
             pluginInstance.launch {
                 updateMessage()

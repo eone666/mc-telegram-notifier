@@ -8,7 +8,7 @@ import io.github.eone666.telegramnotifier.listeners.PlayerJoin
 import io.github.eone666.telegramnotifier.listeners.PlayerQuit
 
 import io.github.eone666.telegramnotifier.features.Notifications
-import io.github.eone666.telegramnotifier.features.PlayersList
+import io.github.eone666.telegramnotifier.features.PlayerList
 import io.github.eone666.telegramnotifier.features.OneTimePasswordForSender
 
 import io.github.eone666.telegramnotifier.telegram.Bot
@@ -22,14 +22,14 @@ class TelegramNotifier : JavaPlugin() {
     var bot: Bot? = null
     lateinit var oneTimePasswordForSender: OneTimePasswordForSender
     lateinit var notifications: Notifications
-    lateinit var playersList: PlayersList
+    lateinit var playerList: PlayerList
 
     fun initFeatures() {
         notifications = Notifications()
-        playersList = PlayersList()
+        playerList = PlayerList()
 
         //init features
-        playersList.update()
+        playerList.update()
     }
 
     override fun onEnable() {
@@ -60,7 +60,7 @@ class TelegramNotifier : JavaPlugin() {
         bot?.stop()
 
         // disable features
-        playersList.clear()
+        playerList.clear()
     }
 
     companion object {
