@@ -45,6 +45,10 @@ class Config {
         pluginInstance.reloadConfig()
     }
 
+    fun set(key: String, value: Any?){
+        config.set(key, value)
+    }
+
     val token = ConfigItem("token")
     val chatId = ConfigItem("chatId")
     val isPluginConfigured = ConfigItem("configured")

@@ -50,7 +50,7 @@ class TelegramNotifier : JavaPlugin() {
         //register minecraft commands
         getCommand("setup")?.setExecutor(SetupCommand())
         getCommand("cancelsetup")?.setExecutor(CancelSetupCommand())
-        getCommand("config")?.tabCompleter = ConfigCommand()
+        getCommand("config")?.setExecutor(ConfigCommand())
 
         logger.info("Started successfully")
     }
