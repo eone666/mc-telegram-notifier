@@ -12,7 +12,7 @@ permissions:
     description: "Telegram Notifier /setup command"
     default: op
   "telegramnotifier.config":
-    description: "Telegram Notifier configuration commands"
+    description: "Telegram Notifier /config command"
     default: op
   "telegramnotifier.*":
     description: "All Telegram Notifier Commands"
