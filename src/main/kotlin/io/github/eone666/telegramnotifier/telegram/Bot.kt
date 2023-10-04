@@ -8,25 +8,25 @@ import kotlin.jvm.Throws
 class Bot @Throws(IllegalArgumentException::class) constructor(token: String) {
     val tg: Bot
 
-    init {
-        this.tg = Bot.createPolling(token = token)
-        this.tg.start()
+    private val config = pluginInstance.config
 
-        // register telegram commands
-        this.tg.onCommand("/setup") { (msg, _) ->
+    init {
+        tg = Bot.createPolling(token = token)
+        tg.start()
+
+        tg.onCommand("/setup") { (msg, _) ->
             val args = msg.text?.split(" ")
-            val chatId: Long = msg.chat.id;
+            val chatId: Long = msg.chat.id
             if (args?.get(1) == pluginInstance.oneTimePasswordForSender.code) {
-                val token = pluginInstance.oneTimePasswordForSender.token
-                pluginInstance.config.token = token // save token from minecraft command
-                pluginInstance.config.chatId = chatId.toString() // save chat_id from person who wrote command to bot
-                pluginInstance.config.isPluginConfigured = true
-                pluginInstance.config.save()
+                config.token.set(pluginInstance.oneTimePasswordForSender.token) // save token from minecraft command
+                config.chatId.set(chatId.toString()) // save chat_id from person who wrote command to bot
+                config.isPluginConfigured.set(true)
+                config.save()
                 pluginInstance.initFeatures()
-                this.tg.sendMessage(text = "Set up successfully", chatId = chatId.toChatId())
+                tg.sendMessage(text = "Set up successfully", chatId = chatId.toChatId())
                 pluginInstance.oneTimePasswordForSender.sendMessage("Set up successfully")
             } else {
-                this.tg.sendMessage(text = "Wrong code", chatId = chatId.toChatId())
+                tg.sendMessage(text = "Wrong code", chatId = chatId.toChatId())
             }
         }
     }

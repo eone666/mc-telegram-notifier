@@ -1,4 +1,4 @@
-package io.github.eone666.telegramnotifier.commands.minecraft
+package io.github.eone666.telegramnotifier.commands
 
 import io.github.eone666.telegramnotifier.pluginInstance
 import org.bukkit.command.Command
@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender
 
 class CancelSetup : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
-        if(pluginInstance.config.isPluginConfigured){
+        if(pluginInstance.config.isPluginConfigured.boolean){
             sender.sendMessage("Plugin is already configured")
             return true
         }

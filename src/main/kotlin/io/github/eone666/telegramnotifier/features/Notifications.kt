@@ -6,16 +6,18 @@ import io.github.eone666.telegramnotifier.pluginInstance
 import org.bukkit.entity.Player
 
 class Notifications() {
+
+    private val config = pluginInstance.config
     private suspend fun sendMessage(message: String) {
         var text = message
-        if (pluginInstance.config.isNotificationsPrefixEnabled) {
-            text = pluginInstance.config.notificationsPrefixText + message
+        if (config.isNotificationsPrefixEnabled.boolean) {
+            text = config.notificationsPrefixText.string + message
         }
         try {
             pluginInstance.bot?.tg?.sendMessage(
-                chatId = pluginInstance.config.chatId!!.toChatId(),
+                chatId = config.chatId.string!!.toChatId(),
                 text = text,
-                disableNotification = pluginInstance.config.isNotificationsSendSilently,
+                disableNotification = config.isNotificationsSilentModeEnabled.boolean,
                 disableWebPagePreview = true
             )
         } catch (err: Throwable) {
@@ -25,7 +27,7 @@ class Notifications() {
     }
 
     fun join(player: Player){
-        if (pluginInstance.config.isNotificationsPlayerJoinEnabled) {
+        if (config.isNotificationsPlayerJoinEnabled.boolean) {
             pluginInstance.launch {
                 sendMessage(String.format("%s has join the game", player.name))
             }
@@ -33,7 +35,7 @@ class Notifications() {
     }
 
     fun quit(player: Player){
-        if (pluginInstance.config.isNotificationsPlayerQuitEnabled) {
+        if (config.isNotificationsPlayerQuitEnabled.boolean) {
             pluginInstance.launch {
                 sendMessage(String.format("%s has left the game", player.name))
             }
