@@ -31,7 +31,7 @@ class Config : TabExecutor {
         label: String,
         args: Array<out String>?
     ): List<String> {
-        if (args == null || args.isEmpty() || args.size <= 1) {
+        if (args == null || args.size <= 1) {
             val completions: ArrayList<String> = ArrayList()
             StringUtil.copyPartialMatches<ArrayList<String>>(args?.get(0) ?: "", configKeys, completions)
             sort(completions)
