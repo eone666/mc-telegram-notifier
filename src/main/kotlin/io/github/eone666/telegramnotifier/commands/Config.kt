@@ -77,7 +77,8 @@ class Config : TabExecutor {
             }
 
             config.notificationsPrefixText.key -> {
-                set(key,value,sender)
+                val string = args.drop(1).joinToString(" ")
+                set(key,string,sender)
                 return true
             }
 
