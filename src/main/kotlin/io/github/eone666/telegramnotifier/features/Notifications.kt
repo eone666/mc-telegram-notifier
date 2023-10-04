@@ -5,19 +5,19 @@ import com.github.shynixn.mccoroutine.bukkit.launch
 import io.github.eone666.telegramnotifier.pluginInstance
 import org.bukkit.entity.Player
 
-class Notifications() {
+class Notifications {
 
     private val config = pluginInstance.config
     private suspend fun sendMessage(message: String) {
         var text = message
-        if (config.isNotificationsPrefixEnabled.boolean) {
-            text = config.notificationsPrefixText.string + message
+        if (config.isNotificationsPrefixEnabled.get()) {
+            text = config.notificationsPrefixText.get() + message
         }
         try {
             pluginInstance.bot?.tg?.sendMessage(
-                chatId = config.chatId.string!!.toChatId(),
+                chatId = config.chatId.get().toChatId(),
                 text = text,
-                disableNotification = config.isNotificationsSilentModeEnabled.boolean,
+                disableNotification = config.isNotificationsSilentModeEnabled.get(),
                 disableWebPagePreview = true
             )
         } catch (err: Throwable) {
@@ -27,17 +27,17 @@ class Notifications() {
     }
 
     fun join(player: Player){
-        if (config.isNotificationsPlayerJoinEnabled.boolean) {
+        if (config.isNotificationsPlayerJoinEnabled.get()) {
             pluginInstance.launch {
-                sendMessage(String.format("%s has join the game", player.name))
+                sendMessage("${player.name} has join the game")
             }
         }
     }
 
     fun quit(player: Player){
-        if (config.isNotificationsPlayerQuitEnabled.boolean) {
+        if (config.isNotificationsPlayerQuitEnabled.get()) {
             pluginInstance.launch {
-                sendMessage(String.format("%s has left the game", player.name))
+                sendMessage("${player.name} has left the game")
             }
         }
     }
