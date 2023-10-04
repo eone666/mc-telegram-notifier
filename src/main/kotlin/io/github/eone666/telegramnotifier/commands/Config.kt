@@ -83,7 +83,7 @@ class Config : TabExecutor {
 
             config.playerListHeaderText.key,
             config.playerListFooterText.key -> {
-                var string = args.drop(1).joinToString(" ")
+                var string = args.drop(1).joinToString(" ").replace("\\n", "\n")
                 if(key == config.playerListHeaderText.key){
                     string += "\n"
                 }
