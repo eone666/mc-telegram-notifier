@@ -9,7 +9,6 @@ import java.util.Collections.sort
 
 
 class Config : TabExecutor {
-
     private val config = pluginInstance.config
 
     private val configKeys = listOf(
@@ -25,6 +24,63 @@ class Config : TabExecutor {
         config.isPlayersListFooterEnabled.key,
         config.playersListFooterText.key,
     )
+
+    private fun setProperty(key: String, value: String, sender: CommandSender):Boolean {
+        when(key){
+            config.isNotificationsPlayerJoinEnabled.key,
+            config.isNotificationsPlayerQuitEnabled.key,
+            config.isNotificationsPrefixEnabled.key,
+            config.isNotificationsSilentModeEnabled.key,
+            config.isPlayersListEnabled.key,
+            config.isPlayersListHeaderEnabled.key,
+            config.isPlayersListFooterEnabled.key -> {
+                val bool: Boolean;
+                try {
+                    bool = value.toBooleanStrict()
+                } catch (_:IllegalArgumentException) {
+                    sender.sendMessage("Argument should be true or false")
+                    return false
+                }
+                config.set(key,bool)
+                sender.sendMessage("Property $key set to $value")
+                return true
+            }
+
+            config.playersListMessageId.key -> {
+                val long = value.toLong()
+                if(long != 0L){
+                    sender.sendMessage("Argument can only be 0")
+                    return false
+                }
+                config.set(key,long)
+                sender.sendMessage("Property $key set to $value")
+                return true
+            }
+
+            else -> {
+                if(!configKeys.contains(key)){
+                    sender.sendMessage("Key is not supported")
+                } else {
+                    config.set(key, value)
+                    sender.sendMessage("Property $key set to $value")
+                }
+                return true
+            }
+        }
+    }
+
+    override fun onCommand(
+        sender: CommandSender,
+        command: Command,
+        label: String,
+        args: Array<out String>
+    ): Boolean {
+        if (args.isEmpty()) {
+            return false
+        }
+
+        return setProperty(args.first(), args[1], sender)
+    }
     override fun onTabComplete(
         sender: CommandSender,
         command: Command,
@@ -55,56 +111,4 @@ class Config : TabExecutor {
         }
 
     }
-
-    override fun onCommand(
-        sender: CommandSender,
-        command: Command,
-        label: String,
-        args: Array<out String>
-    ): Boolean {
-        if (args.isEmpty()) {
-            return false
-        }
-
-        when(args.first()) {
-            config.isNotificationsPlayerJoinEnabled.key -> {
-                return true
-            }
-            config.isNotificationsPlayerQuitEnabled.key -> {
-                return true
-            }
-            config.isNotificationsPrefixEnabled.key -> {
-                return true
-            }
-            config.notificationsPrefixText.key -> {
-                return true
-            }
-            config.isNotificationsSilentModeEnabled.key -> {
-                return true
-            }
-            config.isPlayersListEnabled.key -> {
-                return true
-            }
-            config.playersListMessageId.key -> {
-                return true
-            }
-            config.isPlayersListHeaderEnabled.key -> {
-                return true
-            }
-            config.playersListHeaderText.key -> {
-                return true
-            }
-            config.isPlayersListFooterEnabled.key -> {
-                return true
-            }
-            config.playersListFooterText.key -> {
-                return true
-            }
-            else -> {
-                sender.sendMessage("Key is not supported")
-                return true
-            }
-        }
-    }
-
 }
