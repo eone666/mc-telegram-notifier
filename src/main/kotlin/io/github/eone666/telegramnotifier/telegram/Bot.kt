@@ -21,7 +21,6 @@ class Bot @Throws(IllegalArgumentException::class) constructor(token: String) {
                 config.token.set(pluginInstance.oneTimePasswordForSender.token) // save token from minecraft command
                 config.chatId.set(chatId.toString()) // save chat_id from person who wrote command to bot
                 config.isPluginConfigured.set(true)
-                config.save()
                 pluginInstance.initFeatures()
                 tg.sendMessage(text = "Set up successfully", chatId = chatId.toChatId())
                 pluginInstance.oneTimePasswordForSender.sendMessage("Set up successfully")

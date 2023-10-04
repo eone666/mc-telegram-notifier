@@ -38,7 +38,6 @@ class PlayerList {
                 disableWebPagePreview = true
             )
             config.playerListMessageId.set(response!!.messageId)
-            config.save()
             pluginInstance.logger.info("New message sent")
         } catch (err: Throwable) {
             pluginInstance.logger.warning(err.message)

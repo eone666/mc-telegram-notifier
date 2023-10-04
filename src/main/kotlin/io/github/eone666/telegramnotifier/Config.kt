@@ -43,16 +43,13 @@ class Config {
         this.config = pluginInstance.getConfig()
     }
 
-    fun save() {
-        pluginInstance.saveConfig()
-    }
-
     fun reload() {
         pluginInstance.reloadConfig()
     }
 
     fun set(key: String, value: Any?){
         config.set(key, value)
+        pluginInstance.saveConfig()
     }
 
     val token = ConfigItem<String>("token", "123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11")
