@@ -1,5 +1,7 @@
 # Telegram Notifier
 
+![Modrinth Downloads](https://img.shields.io/modrinth/dt/5MPMN9NC?style=flat-square&logo=Modrinth&label=Downloads%20on%20Modrinth)
+
 This plugin provides a way to receive notifications on a Telegram chat when a player joins or quits your Minecraft server.
 
 ## Installation
