@@ -16,6 +16,8 @@ import io.github.eone666.telegramnotifier.telegram.Bot
 import io.github.eone666.telegramnotifier.commands.Setup as SetupCommand
 import io.github.eone666.telegramnotifier.commands.CancelSetup as CancelSetupCommand
 import io.github.eone666.telegramnotifier.commands.Config as ConfigCommand
+import io.github.eone666.telegramnotifier.commands.ResetTelegram as ResetTelegramCommand
+import io.github.eone666.telegramnotifier.commands.ResetConfig as ResetConfigCommand
 
 class TelegramNotifier : JavaPlugin() {
     lateinit var config: Config
@@ -51,6 +53,8 @@ class TelegramNotifier : JavaPlugin() {
         getCommand("setup")?.setExecutor(SetupCommand())
         getCommand("cancelsetup")?.setExecutor(CancelSetupCommand())
         getCommand("config")?.setExecutor(ConfigCommand())
+        getCommand("resettelegram")?.setExecutor(ResetTelegramCommand())
+        getCommand("resetconfig")?.setExecutor(ResetConfigCommand())
 
         logger.info("Started successfully")
     }

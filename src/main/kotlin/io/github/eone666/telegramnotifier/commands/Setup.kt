@@ -13,7 +13,7 @@ class Setup : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
 
         if (pluginInstance.config.isPluginConfigured.get()){
-            sender.sendMessage("Plugin is already configured")
+            sender.sendMessage("Plugin is already configured. Use /resettelegram or /resetconfig for reset configuration")
             return true
         }
 
@@ -22,7 +22,7 @@ class Setup : CommandExecutor {
             pluginInstance.bot = Bot(token)
             pluginInstance.oneTimePasswordForSender = OneTimePasswordForSender(token, sender)
             val code: String = pluginInstance.oneTimePasswordForSender.code
-            sender.sendMessage("Enter the \"/setup ${code}\" command in the telegram bot")
+            sender.sendMessage("Enter the \"/setup ${code}\" command in the telegram bot or channel with the bot")
             return true
         }
 

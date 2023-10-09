@@ -1,10 +1,10 @@
 package io.github.eone666.telegramnotifier
 
 import org.bukkit.configuration.file.FileConfiguration
-import kotlin.jvm.Throws
+import java.io.File
 
 @Suppress("UNCHECKED_CAST")
-class ConfigItem<T>(val key: String, private val defaultValue: T) {
+class ConfigItem<T>(val key: String, val defaultValue: T) {
     private val config = pluginInstance.getConfig()
 
     @Throws(IllegalArgumentException::class) fun get(): T {
@@ -50,6 +50,12 @@ class Config {
     fun set(key: String, value: Any?){
         config.set(key, value)
         pluginInstance.saveConfig()
+    }
+
+    fun reset () {
+        val configFile = File(pluginInstance.dataFolder, "config.yml")
+        configFile.delete()
+        pluginInstance.saveDefaultConfig()
     }
 
     val token = ConfigItem<String>("token", "123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11")

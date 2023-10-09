@@ -52,7 +52,7 @@ class Config : TabExecutor {
                     bool = value.toBooleanStrict()
                 } catch (_:IllegalArgumentException) {
                     sender.sendMessage("Argument should be true or false")
-                    return false
+                    return true
                 }
                 set(key,bool,sender)
                 return true
@@ -66,7 +66,7 @@ class Config : TabExecutor {
                     bool = value.toBooleanStrict()
                 } catch (_:IllegalArgumentException) {
                     sender.sendMessage("Argument should be true or false")
-                    return false
+                    return true
                 }
                 set(key,bool,sender)
                 pluginInstance.playerList.update()
@@ -77,8 +77,9 @@ class Config : TabExecutor {
                 val long = value.toLong()
                 if(long != 0L){
                     sender.sendMessage("Argument can only be 0")
-                    return false
+                    return true
                 }
+                pluginInstance.playerList.deleteMessage()
                 set(key,long,sender)
                 return true
             }

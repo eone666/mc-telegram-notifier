@@ -55,6 +55,21 @@ class PlayerList {
         }
     }
 
+    fun deleteMessage() {
+        if(pluginInstance.config.playerListMessageId.get() != 0L){
+            pluginInstance.launch {
+                try {
+                    pluginInstance.bot?.tg?.deleteMessage(
+                        chatId = pluginInstance.config.chatId.get().toChatId(),
+                        messageId = pluginInstance.config.playerListMessageId.get()
+                    )
+                } catch (err: Throwable) {
+                    pluginInstance.logger.warning(err.message)
+                }
+            }
+        }
+    }
+
     private suspend fun editMessage() {
         try {
             tg?.editMessageText(
