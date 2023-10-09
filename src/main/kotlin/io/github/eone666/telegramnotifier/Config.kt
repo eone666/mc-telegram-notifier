@@ -5,9 +5,10 @@ import java.io.File
 
 @Suppress("UNCHECKED_CAST")
 class ConfigItem<T>(val key: String, val defaultValue: T) {
-    private val config = pluginInstance.getConfig()
-
     @Throws(IllegalArgumentException::class) fun get(): T {
+        pluginInstance.reloadConfig()
+        val config = pluginInstance.getConfig()
+
         val a: T = defaultValue
         when (a) {
             is String -> return config.getString(key, defaultValue as String) as T
@@ -31,24 +32,18 @@ class ConfigItem<T>(val key: String, val defaultValue: T) {
     }
 
     fun set(value: T?) {
-        config.set(key, value)
+        pluginInstance.getConfig().set(key, value)
         pluginInstance.saveConfig()
     }
 }
 
 class Config {
-    private val config: FileConfiguration
     init {
         pluginInstance.saveDefaultConfig()
-        this.config = pluginInstance.getConfig()
-    }
-
-    fun reload() {
-        pluginInstance.reloadConfig()
     }
 
     fun set(key: String, value: Any?){
-        config.set(key, value)
+        pluginInstance.getConfig().set(key, value)
         pluginInstance.saveConfig()
     }
 
