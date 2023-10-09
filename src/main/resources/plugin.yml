@@ -14,6 +14,18 @@ permissions:
   "telegramnotifier.config":
     description: "Telegram Notifier /config command"
     default: op
+  "telegramnotifier.reset.telegram":
+    description: "Telegram Notifier /resettelegram command"
+    default: op
+  "telegramnotifier.reset.config":
+      description: "Telegram Notifier /resetconfig command"
+      default: op
+  "telegramnotifier.reset.*":
+    description: "Telegram Notifier all reset commands"
+    default: op
+    children:
+      "telegramnotifier.reset.telegram": true
+      "telegramnotifier.reset.config": true
   "telegramnotifier.*":
     description: "All Telegram Notifier Commands"
     default: op
@@ -29,6 +41,14 @@ commands:
     description: "Cancel Telegram Notifier setup"
     usage: "Usage: /cancelsetup"
     permission: "telegramnotifier.setup"
+  resettelegram:
+    description: "Reset Telegram related configuration"
+    usage: "Usage: /resettelegram"
+    permission: "telegramnotifier.reset.telegram"
+  resetconfig:
+    description: "Reset Telegram Notifier config"
+    usage: "Usage: /resetconfig"
+    permission: "telegramnotifier.reset.config"
   config:
     description: "Configure Telegram Notifier"
     usage: "Usage: /config <key> <value>"
