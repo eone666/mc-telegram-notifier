@@ -64,7 +64,16 @@ class Config {
     var isPlayerListEnabled = ConfigItem<Boolean>("playerList.enabled", false)
     var playerListMessageId = ConfigItem<Long>("playerList.messageId", 0L)
     val isPlayerListHeaderEnabled = ConfigItem<Boolean>("playerList.header.enabled", false)
-    val playerListHeaderText = ConfigItem<String>("playerList.header.text", "Header\n")
+    val playerListHeaderText = ConfigItem<String>("playerList.header.text",
+        """
+        IP: `127.0.0.1:25565`
+        Website: [https://example.org](https://example.org)
+        """.trimIndent() + "\n"
+    )
     val isPlayerListFooterEnabled = ConfigItem<Boolean>("playerList.footer.enabled", false)
-    val playerListFooterText = ConfigItem<String>("playerList.footer.text", "\nFooter")
+    val playerListFooterText = ConfigItem<String>("playerList.footer.text",
+        "\n\n" + """
+        Author: [Example](https://link.to/personal-page)
+        """.trimIndent()
+    )
 }
